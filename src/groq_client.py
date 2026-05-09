@@ -1,12 +1,14 @@
 import os
 import re
 import time
-from groq import Groq, BadRequestError
+from groq import Groq, APIStatusError
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
-# 內建 web search 的模型,用於 Round 1 抓 paper
-MODEL_WITH_SEARCH = "groq/compound"
+# 內建 web search,Round 1 使用。
+# 用 compound-mini 而不是 compound:single tool call、latency 低 3 倍、
+# 內部 underlying model 呼叫少,token/TPM 開銷小很多
+MODEL_WITH_SEARCH = "groq/compound-mini"
 # 強推理模型,用於 Round 2~5 嚴格 critique 與整合
 MODEL_REASONING = "openai/gpt-oss-120b"
 
@@ -17,7 +19,10 @@ def call_groq(model: str, system: str, user: str,
               max_retries: int = 4) -> str:
     """呼叫 Groq。
     - 一般錯誤:exponential backoff retry
-    - 413 (request_too_large):自動把 max_tokens 砍半重試,避開 TPM 上限
+    - 413 (Request Too Large / TPM 超限):自動把 max_tokens 砍半,並等 60s 讓 TPM bucket reset
+    - 429 (Rate Limit):等久一點再試
+    
+    依 Groq SDK 規格:413/429 raise APIStatusError,可從 e.status_code 判斷。
     """
     last_err = None
     current_max = max_tokens
@@ -34,16 +39,29 @@ def call_groq(model: str, system: str, user: str,
             )
             return resp.choices[0].message.content.strip()
 
-        except BadRequestError as e:
-            # 413 / request_too_large:把輸出長度砍半再試
-            msg = str(e)
+        except APIStatusError as e:
             last_err = e
-            if "413" in msg or "request_too_large" in msg or "too large" in msg.lower():
+            status = getattr(e, "status_code", None)
+            print(f"[Groq] APIStatusError {status}: {e}")
+
+            if status == 413:
+                # 請求太大或 TPM 超限。砍半輸出 budget,等 TPM rolling window 過去 (~60s)
                 current_max = max(256, current_max // 2)
-                print(f"[Groq] 413 too large, halving max_tokens -> {current_max}")
-                time.sleep(2)
+                wait = 60
+                print(f"[Groq] 413 -> halve max_tokens to {current_max}, wait {wait}s for TPM reset")
+                time.sleep(wait)
                 continue
-            raise
+
+            if status == 429:
+                # 觸到 RPM/RPD/TPD 限制
+                wait = 60 * (attempt + 1)
+                print(f"[Groq] 429 -> wait {wait}s")
+                time.sleep(wait)
+                continue
+
+            # 其他 4xx/5xx
+            wait = 2 ** attempt
+            time.sleep(wait)
 
         except Exception as e:
             last_err = e
@@ -64,5 +82,4 @@ def truncate_review(text: str, max_chars: int = 1500) -> str:
         return "NO_ISSUES"
     if len(text) <= max_chars:
         return text
-    # 保留開頭(通常是最重要的問題)
     return text[:max_chars] + "\n…(以下已截斷)"

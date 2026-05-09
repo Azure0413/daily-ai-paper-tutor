@@ -3,6 +3,10 @@
     {
       "date": "2026-05-09",
       "topic": "AdaMoe – 自適應混合專家 (Mixture‑of‑Experts) 路由機制"
+    },
+    {
+      "date": "2026-05-09",
+      "topic": "Mamba 2 – 結構化線性狀態空間模型的高效長序列推理 (NeurIPS 2024)"
     }
   ]
 }

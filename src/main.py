@@ -1,71 +1,110 @@
 import sys
-from groq_client import call_groq, MODEL_WITH_SEARCH, MODEL_REASONING
+from groq_client import (
+    call_groq, truncate_review,
+    MODEL_WITH_SEARCH, MODEL_REASONING,
+)
 from prompts import (
     GENERATOR_SYSTEM, generator_user_prompt,
     MATH_CRITIC_SYSTEM, math_critic_user,
     CONCEPT_CRITIC_SYSTEM, concept_critic_user,
     FORMAT_CRITIC_SYSTEM, format_critic_user,
+    AGGREGATOR_SYSTEM, aggregator_user,
     FINAL_REFINER_SYSTEM, final_refiner_user,
 )
 from history import load_history, save_topic, extract_topic
 from discord_sender import send_to_discord
 
 
+def all_clean(reviews: list[str]) -> bool:
+    """三份 critique 都沒問題就跳過 aggregation + refine。
+    對應 SID (Sun et al., 2025) 的 confidence-based early exit。"""
+    return all(r.strip() == "NO_ISSUES" for r in reviews)
+
+
 def run():
     history = load_history()
     print(f"[History] {len(history)} past topics loaded")
 
-    # ---------- Round 1: Generate ----------
-    print("[Round 1] Generating draft with web search…")
+    # ---------- Round 1: Generator (web search) ----------
+    print("[Round 1] Generate draft with web search…")
     draft = call_groq(
         model=MODEL_WITH_SEARCH,
         system=GENERATOR_SYSTEM,
         user=generator_user_prompt(history),
+        max_tokens=1800,
         temperature=0.7,
     )
-    print(f"[Round 1] draft length = {len(draft)}")
+    print(f"[R1] draft = {len(draft)} chars")
 
     # ---------- Round 2: Math Critic ----------
-    print("[Round 2] Math critique…")
-    math_review = call_groq(
+    print("[Round 2] Math critic…")
+    math_r = truncate_review(call_groq(
         model=MODEL_REASONING,
         system=MATH_CRITIC_SYSTEM,
         user=math_critic_user(draft),
+        max_tokens=900,
         temperature=0.2,
-    )
-    print(f"[Round 2] math_review = {math_review[:200]}…")
+    ))
+    print(f"[R2] math_review = {len(math_r)} chars")
 
     # ---------- Round 3: Concept Critic ----------
-    print("[Round 3] Concept critique…")
-    concept_review = call_groq(
+    print("[Round 3] Concept critic…")
+    concept_r = truncate_review(call_groq(
         model=MODEL_REASONING,
         system=CONCEPT_CRITIC_SYSTEM,
         user=concept_critic_user(draft),
+        max_tokens=900,
         temperature=0.2,
-    )
-    print(f"[Round 3] concept_review = {concept_review[:200]}…")
+    ))
+    print(f"[R3] concept_review = {len(concept_r)} chars")
 
     # ---------- Round 4: Format Critic ----------
-    print("[Round 4] Format critique…")
-    format_review = call_groq(
-        model=MODEL_REASONING,
-        system=FORMAT_CRITIC_SYSTEM,
-        user=format_critic_user(draft),
-        temperature=0.2,
+    print("[Round 4] Format critic…")
+    format_r = truncate_review(
+        call_groq(
+            model=MODEL_REASONING,
+            system=FORMAT_CRITIC_SYSTEM,
+            user=format_critic_user(draft),
+            max_tokens=600,
+            temperature=0.2,
+        ),
+        max_chars=800,
     )
-    print(f"[Round 4] format_review = {format_review[:200]}…")
+    print(f"[R4] format_review = {len(format_r)} chars")
 
-    # ---------- Round 5: Final Refine ----------
-    print("[Round 5] Final integration…")
-    final = call_groq(
-        model=MODEL_REASONING,
-        system=FINAL_REFINER_SYSTEM,
-        user=final_refiner_user(draft, math_review, concept_review, format_review),
-        temperature=0.3,
-    )
-    print(f"[Round 5] final length = {len(final)}")
+    # ---------- Early exit: 全部 NO_ISSUES 就跳過後兩輪 ----------
+    if all_clean([math_r, concept_r, format_r]):
+        print("[Early exit] All critics NO_ISSUES, skipping aggregation + refine")
+        final = draft
+    else:
+        # ---------- Round 4.5: Aggregator (新增) ----------
+        # 對應 MoA (Wang et al., 2024) aggregator + MAD summarizer 的 history compression
+        print("[Round 4.5] Aggregate critiques into action list…")
+        action_list = call_groq(
+            model=MODEL_REASONING,
+            system=AGGREGATOR_SYSTEM,
+            user=aggregator_user(draft, math_r, concept_r, format_r),
+            max_tokens=600,
+            temperature=0.2,
+        )
+        print(f"[R4.5] action_list = {len(action_list)} chars")
 
-    # ---------- Send & Save ----------
+        if action_list.strip() == "ALL_CLEAN":
+            print("[Early exit @ aggregator] ALL_CLEAN")
+            final = draft
+        else:
+            # ---------- Round 5: Refiner (輸入已被壓縮,token 用量大降) ----------
+            print("[Round 5] Final refinement…")
+            final = call_groq(
+                model=MODEL_REASONING,
+                system=FINAL_REFINER_SYSTEM,
+                user=final_refiner_user(draft, action_list),
+                max_tokens=1800,
+                temperature=0.3,
+            )
+            print(f"[R5] final = {len(final)} chars")
+
+    # ---------- Send & save ----------
     topic = extract_topic(final)
     print(f"[Save] topic = {topic}")
     save_topic(topic)
@@ -79,12 +118,14 @@ if __name__ == "__main__":
     try:
         run()
     except Exception as e:
-        # 失敗也送一則訊息給自己,免得默默掛掉沒發現
         import traceback, requests, os
         msg = f"⚠️ daily-ai-paper-tutor 失敗:\n```\n{traceback.format_exc()[-1500:]}\n```"
         try:
-            requests.post(os.environ["DISCORD_WEBHOOK_URL"],
-                          json={"content": msg}, timeout=15)
+            requests.post(
+                os.environ["DISCORD_WEBHOOK_URL"],
+                json={"content": msg},
+                timeout=15,
+            )
         except Exception:
             pass
         sys.exit(1)

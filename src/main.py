@@ -1,6 +1,6 @@
 import sys
 from groq_client import (
-    call_groq, truncate_review,
+    call_groq, call_groq_complete, truncate_review,
     MODEL_WITH_SEARCH, MODEL_REASONING,
 )
 from prompts import (
@@ -16,8 +16,7 @@ from discord_sender import send_to_discord
 
 
 def all_clean(reviews: list[str]) -> bool:
-    """三份 critique 都沒問題就跳過 aggregation + refine。
-    對應 SID (Sun et al., 2025) 的 confidence-based early exit。"""
+    """三份 critique 都沒問題就跳過 aggregation + refine (SID early exit)。"""
     return all(r.strip() == "NO_ISSUES" for r in reviews)
 
 
@@ -25,14 +24,15 @@ def run():
     history = load_history()
     print(f"[History] {len(history)} past topics loaded")
 
-    # ---------- Round 1: Generator (web search) ----------
+    # ---------- Round 1: Generator (web search,長輸出 -> 自動續寫) ----------
     print("[Round 1] Generate draft with web search…")
-    draft = call_groq(
+    draft = call_groq_complete(
         model=MODEL_WITH_SEARCH,
         system=GENERATOR_SYSTEM,
         user=generator_user_prompt(history),
         max_tokens=1800,
         temperature=0.7,
+        max_continuations=3,
     )
     print(f"[R1] draft = {len(draft)} chars")
 
@@ -77,8 +77,7 @@ def run():
         print("[Early exit] All critics NO_ISSUES, skipping aggregation + refine")
         final = draft
     else:
-        # ---------- Round 4.5: Aggregator (新增) ----------
-        # 對應 MoA (Wang et al., 2024) aggregator + MAD summarizer 的 history compression
+        # ---------- Round 4.5: Aggregator ----------
         print("[Round 4.5] Aggregate critiques into action list…")
         action_list = call_groq(
             model=MODEL_REASONING,
@@ -93,14 +92,15 @@ def run():
             print("[Early exit @ aggregator] ALL_CLEAN")
             final = draft
         else:
-            # ---------- Round 5: Refiner (輸入已被壓縮,token 用量大降) ----------
+            # ---------- Round 5: Refiner (長輸出 -> 自動續寫) ----------
             print("[Round 5] Final refinement…")
-            final = call_groq(
+            final = call_groq_complete(
                 model=MODEL_REASONING,
                 system=FINAL_REFINER_SYSTEM,
                 user=final_refiner_user(draft, action_list),
                 max_tokens=1800,
                 temperature=0.3,
+                max_continuations=3,
             )
             print(f"[R5] final = {len(final)} chars")
 

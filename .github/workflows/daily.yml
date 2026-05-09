@@ -1,0 +1,38 @@
+name: Daily AI Paper Tutor
+
+on:
+  schedule:
+    # 台灣時間每天早上 9:00 = UTC 01:00
+    - cron: "0 1 * * *"
+  workflow_dispatch:  # 允許手動觸發測試
+
+permissions:
+  contents: write   # 需要 push 更新 topics_history.json
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run agent
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: python src/main.py
+
+      - name: Commit history
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add topics_history.json
+          git diff --staged --quiet || git commit -m "chore: update topics history"
+          git push

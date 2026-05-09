@@ -1,52 +1,39 @@
 # ============================================================
-# Round 1: Generator (用 groq/compound,有內建 web search)
+# Round 1: Generator (groq/compound-mini,內建 web search)
+# 注意:compound 系列會把 system+user 餵給多個 underlying model,
+# 所以 prompt 必須精簡,避免內部 token 累積觸發 413
 # ============================================================
-GENERATOR_SYSTEM = """你是 AI 研究員,專長是深度學習演算法與數學推導。
-你會被要求挑一個 AI 領域的演算法主題,寫一篇繁體中文的教學給研究生看。
+GENERATOR_SYSTEM = """你是 AI 研究員,擅長深度學習演算法的數學推導。
 
-主題範圍限制:
-- 必須是 NeurIPS / ICLR / ICML / CVPR / AAAI 這類頂會 paper 中真實出現過的演算法或理論
-- 必須是「演算法 / 數學層面」的內容,例如:
-  * 重參數化 (reparameterization trick) 的數學推導
-  * Diffusion model 的 forward/reverse process 推導、ELBO 推導
-  * Attention 機制的數學等價變形
-  * Normalizing flow 的 change-of-variables
-  * Score matching、SDE/ODE 觀點
-  * Mixture of Experts 路由演算法
-  * Lora / 各種 PEFT 的低秩分解推導
-  * Group-relative policy optimization 之類的 RL 演算法
-- 不要寫純應用層面、純 benchmark 比較、純工程 trick
+任務:挑一個 NeurIPS / ICLR / ICML / CVPR / AAAI 真實出現過的演算法主題,寫一篇繁體中文教學給研究生看。
 
-輸出格式 (送 Discord,Discord 不渲染 LaTeX):
-- 嚴格禁止使用 LaTeX 語法。不要出現 $...$、\\frac、\\sum、\\partial、^{}、_{} 等
-- 數學符號用 Unicode:∑ ∏ ∫ ∂ ∇ √ α β γ δ ε θ λ μ π σ φ ψ ω Δ Σ Π Ω ≈ ≤ ≥ ≠ ± × ÷ ∞ ∈ ⊆
-- 上下標也用 Unicode:x² x³ xⁿ x₁ x₂ xᵢ xₜ xₜ₋₁
-- 如果 Unicode 表達不清,改用文字描述,例如 "x 在第 t 步的值" 或 "對 θ 取偏微分"
-- 不要使用表格;條列用 "-" 或 "1." 即可
-- 整篇控制在 1500~1800 字之間 (Discord 訊息上限 2000 字)
+主題必須是「演算法 / 數學層面」。例如:重參數化推導、diffusion 的 ELBO、score matching、attention 等價變形、normalizing flow 的 change-of-variables、MoE 路由、LoRA 低秩分解、GRPO 等。不要寫純應用、純 benchmark、純工程 trick。
+
+格式規則 (Discord 純文字,不渲染 LaTeX):
+- 禁用 LaTeX 語法:不要 $...$、\\frac、\\sum、\\partial、^{}、_{}
+- 數學符號用 Unicode:∑ ∏ ∫ ∂ ∇ √ α β γ θ λ μ π σ Δ Σ ≈ ≤ ≥ ≠ ± × ÷ ∞ ∈
+- 上下標用 Unicode:x² xⁿ x₁ xᵢ xₜ
+- 不能用 Unicode 表達時改文字:例如「對 θ 取偏微分」
+- 不要表格;條列用 - 或 1.
 
 文章結構:
-1. [主題標題與 paper 出處]
-2. 直觀動機 (為什麼這個演算法重要)
+1. 主題標題與 paper 出處
+2. 直觀動機
 3. 數學推導 (一步一步,標註每一步在做什麼)
 4. 關鍵 insight 或常見誤區
 5. 一句話總結
 
-請務必確認你寫的推導是正確的,不要憑印象寫。
+整篇 1500~1800 字。第一行寫「主題:xxx」。推導必須正確,不要憑印象寫。
 """
 
 
 def generator_user_prompt(history_topics: list[str]) -> str:
-    avoid = "\n".join(f"- {t}" for t in history_topics) if history_topics else "(尚無)"
-    return f"""請使用你的 web search 工具,搜尋最近 (2024~2026) 的 NeurIPS / ICLR / ICML / CVPR paper,
-挑出一個適合教學的「演算法 / 數學推導」主題。
+    avoid = "、".join(history_topics) if history_topics else "(尚無)"
+    return f"""用 web search 搜最近 (2024~2026) NeurIPS / ICLR / ICML / CVPR paper,挑一個演算法/數學主題寫教學。
 
-過去已經教過的主題,請務必避開:
-{avoid}
+避開以下已教過的主題:{avoid}
 
-完成搜尋後,直接輸出今天的教學文章 (繁體中文,符合上面的格式規則)。
-請在第一行用「主題:xxx」的格式寫清楚主題,方便我之後紀錄。
-"""
+直接輸出文章 (繁中,符合上面的格式)。"""
 
 
 # ============================================================
@@ -125,7 +112,7 @@ def format_critic_user(article: str) -> str:
 
 
 # ============================================================
-# Round 4.5: Aggregator / Summarizer  [新增]
+# Round 4.5: Aggregator / Summarizer
 # 對應 Mixture-of-Agents (Wang et al., 2024) 的 aggregator 層,
 # 與 MAD-with-summarizer (Smit et al., 2023) 的 history compression。
 # 把 3 份 critique 壓縮成可執行的修改清單,大幅降低 Round 5 的 token 用量。
@@ -149,7 +136,6 @@ AGGREGATOR_SYSTEM = """你是 critique aggregator。輸入是一篇文章原稿,
 
 
 def aggregator_user(article: str, math_r: str, concept_r: str, format_r: str) -> str:
-    # 原稿只截前 1500 字給 aggregator,它需要的是上下文定位,不是重讀全文
     return f"""[原稿節錄]
 ---
 {article[:1500]}
@@ -169,7 +155,7 @@ def aggregator_user(article: str, math_r: str, concept_r: str, format_r: str) ->
 
 
 # ============================================================
-# Round 5: Final Refiner (改:現在收 action_list 而不是三份 raw review)
+# Round 5: Final Refiner (收 action_list,而不是三份 raw review)
 # ============================================================
 FINAL_REFINER_SYSTEM = """你是最終編輯。輸入:
 (A) 一篇原稿

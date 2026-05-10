@@ -11,6 +11,10 @@
     {
       "date": "2026-05-09",
       "topic": "AdaDiff – 自適應噪聲排程的高效擴散抽樣 (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-05-10",
+      "topic": "Diffusion Normalizing Flow (DNF) – 結合擴散模型與正規化流的數學推導"
     }
   ]
 }

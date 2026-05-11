@@ -15,6 +15,10 @@
     {
       "date": "2026-05-10",
       "topic": "Diffusion Normalizing Flow (DNF) – 結合擴散模型與正規化流的數學推導"
+    },
+    {
+      "date": "2026-05-11",
+      "topic": "Dynamic Sparse Training via Gradient Masking (DST) – 由 ICLR 2024 之論文 *Dynamic Sparse Training via Gradient Masking* 提出"
     }
   ]
 }

@@ -19,6 +19,10 @@
     {
       "date": "2026-05-11",
       "topic": "Dynamic Sparse Training via Gradient Masking (DST) – 由 ICLR 2024 之論文 *Dynamic Sparse Training via Gradient Masking* 提出"
+    },
+    {
+      "date": "2026-05-12",
+      "topic": "神經常微分方程 (Neural ODE) 的伴隨敏感度法與自適應檢查點 (ICLR 2025)"
     }
   ]
 }

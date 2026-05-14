@@ -27,6 +27,10 @@
     {
       "date": "2026-05-13",
       "topic": "AdaScale – 自適應梯度縮放於大批次訓練 (ICML 2024)"
+    },
+    {
+      "date": "2026-05-14",
+      "topic": "AdaM – 自適應動量 (Adaptive Momentum) 於大批次訓練的數學推導"
     }
   ]
 }

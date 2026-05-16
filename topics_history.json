@@ -35,6 +35,10 @@
     {
       "date": "2026-05-15",
       "topic": "Vision Transformer 的神經切線核 (Neural Tangent Kernel) 推導"
+    },
+    {
+      "date": "2026-05-16",
+      "topic": "圖神經切線核 (Graph Neural Tangent Kernel, GNTK) – 來自 ICLR 2025 之《Graph Neural Tangent Kernel: A Unified Theory of Graph Deep Learning》"
     }
   ]
 }

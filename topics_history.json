@@ -39,6 +39,10 @@
     {
       "date": "2026-05-16",
       "topic": "圖神經切線核 (Graph Neural Tangent Kernel, GNTK) – 來自 ICLR 2025 之《Graph Neural Tangent Kernel: A Unified Theory of Graph Deep Learning》"
+    },
+    {
+      "date": "2026-05-17",
+      "topic": "Adaptive Step‑Size Continuous Normalizing Flow (AS‑CNF)"
     }
   ]
 }

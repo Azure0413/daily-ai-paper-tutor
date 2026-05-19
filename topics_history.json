@@ -47,6 +47,10 @@
     {
       "date": "2026-05-18",
       "topic": "動態 Token 合併 (Dynamic Token Merging) – CVPR 2024 《Dynamic Token Merging for Efficient Vision Transformers》"
+    },
+    {
+      "date": "2026-05-19",
+      "topic": "Nyströmformer – 以 Nyström 方法近似自注意力的數學推導（NeurIPS 2024）"
     }
   ]
 }

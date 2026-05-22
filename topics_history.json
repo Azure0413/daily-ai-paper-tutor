@@ -59,6 +59,10 @@
     {
       "date": "2026-05-21",
       "topic": "AdaHessian – 基於對角海森近似的自適應二階優化器 (ICML 2024)"
+    },
+    {
+      "date": "2026-05-22",
+      "topic": "隱式微分在超參數優化中的應用（ICLR 2025 《Implicit Differentiation for Hyper‑parameter Optimization: A Unified View》）"
     }
   ]
 }

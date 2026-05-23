@@ -63,6 +63,10 @@
     {
       "date": "2026-05-22",
       "topic": "隱式微分在超參數優化中的應用（ICLR 2025 《Implicit Differentiation for Hyper‑parameter Optimization: A Unified View》）"
+    },
+    {
+      "date": "2026-05-23",
+      "topic": "Sinkhorn Attention – 以熵正則化最適傳輸近似自注意力 (NeurIPS 2024)"
     }
   ]
 }

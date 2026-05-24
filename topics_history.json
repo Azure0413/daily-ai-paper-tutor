@@ -67,6 +67,10 @@
     {
       "date": "2026-05-23",
       "topic": "Sinkhorn Attention – 以熵正則化最適傳輸近似自注意力 (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-05-24",
+      "topic": "SVD‑Former – 低秩分解自注意力的數學推導 (NeurIPS 2024)"
     }
   ]
 }

@@ -71,6 +71,10 @@
     {
       "date": "2026-05-24",
       "topic": "SVD‑Former – 低秩分解自注意力的數學推導 (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-05-25",
+      "topic": "多尺度遮蔽注意力 (Multi‑Scale Masked Attention, M2M) – ICLR 2021"
     }
   ]
 }

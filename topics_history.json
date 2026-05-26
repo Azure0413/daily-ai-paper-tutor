@@ -75,6 +75,10 @@
     {
       "date": "2026-05-25",
       "topic": "多尺度遮蔽注意力 (Multi‑Scale Masked Attention, M2M) – ICLR 2021"
+    },
+    {
+      "date": "2026-05-26",
+      "topic": "Adaptive Computation Time (ACT) 於 Transformer 的數學推導與實作"
     }
   ]
 }

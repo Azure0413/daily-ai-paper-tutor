@@ -79,6 +79,10 @@
     {
       "date": "2026-05-26",
       "topic": "Adaptive Computation Time (ACT) 於 Transformer 的數學推導與實作"
+    },
+    {
+      "date": "2026-05-27",
+      "topic": "Gradient Surgery for Multi‑Task Learning (PCGrad), Yu, Kumar, Gupta, Levine, NeurIPS 2020"
     }
   ]
 }

@@ -83,6 +83,10 @@
     {
       "date": "2026-05-27",
       "topic": "Gradient Surgery for Multi‑Task Learning (PCGrad), Yu, Kumar, Gupta, Levine, NeurIPS 2020"
+    },
+    {
+      "date": "2026-05-28",
+      "topic": "Random Feature Attention (RFA) – 以隨機特徵近似 Softmax 注意力的數學推導"
     }
   ]
 }

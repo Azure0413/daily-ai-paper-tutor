@@ -91,6 +91,10 @@
     {
       "date": "2026-05-29",
       "topic": "Consistency Models – 一步生成的數學原理與推導（ICLR 2023）"
+    },
+    {
+      "date": "2026-05-30",
+      "topic": "Early‑Exit Transformer 於高效推理的數學推導與實作"
     }
   ]
 }

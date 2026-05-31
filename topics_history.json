@@ -95,6 +95,10 @@
     {
       "date": "2026-05-30",
       "topic": "Early‑Exit Transformer 於高效推理的數學推導與實作"
+    },
+    {
+      "date": "2026-05-31",
+      "topic": "AdaClip – 自適應梯度裁剪於大批次訓練 (NeurIPS 2024)"
     }
   ]
 }

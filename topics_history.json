@@ -99,6 +99,10 @@
     {
       "date": "2026-05-31",
       "topic": "AdaClip – 自適應梯度裁剪於大批次訓練 (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-06-01",
+      "topic": "Deep Equilibrium Model (DEQ) 的隱式微分與收斂分析"
     }
   ]
 }

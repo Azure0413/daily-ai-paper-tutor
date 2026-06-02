@@ -103,6 +103,10 @@
     {
       "date": "2026-06-01",
       "topic": "Deep Equilibrium Model (DEQ) 的隱式微分與收斂分析"
+    },
+    {
+      "date": "2026-06-02",
+      "topic": "Fourier Feature Networks (FFN) – 以隨機傅里葉特徵加速高頻函數表示的數學推導 (ICLR 2024)"
     }
   ]
 }

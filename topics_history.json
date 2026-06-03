@@ -107,6 +107,10 @@
     {
       "date": "2026-06-02",
       "topic": "Fourier Feature Networks (FFN) – 以隨機傅里葉特徵加速高頻函數表示的數學推導 (ICLR 2024)"
+    },
+    {
+      "date": "2026-06-03",
+      "topic": "Stochastic Interpolants – 由 ICLR 2025 《Stochastic Interpolants: A Unified Framework for Diffusion and Flow Models》衍生的數學推導"
     }
   ]
 }

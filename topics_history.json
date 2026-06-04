@@ -111,6 +111,10 @@
     {
       "date": "2026-06-03",
       "topic": "Stochastic Interpolants – 由 ICLR 2025 《Stochastic Interpolants: A Unified Framework for Diffusion and Flow Models》衍生的數學推導"
+    },
+    {
+      "date": "2026-06-04",
+      "topic": "Expert Choice Routing for Mixture‑of‑Experts (NeurIPS 2024)"
     }
   ]
 }

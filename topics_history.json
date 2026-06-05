@@ -115,6 +115,10 @@
     {
       "date": "2026-06-04",
       "topic": "Expert Choice Routing for Mixture‑of‑Experts (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-06-05",
+      "topic": "Rotary Positional Embedding (RoPE) – 旋轉式位置編碼"
     }
   ]
 }

@@ -123,6 +123,10 @@
     {
       "date": "2026-06-06",
       "topic": "FlashAttention‑2 – 低記憶體且高速的注意力演算法（NeurIPS 2024）"
+    },
+    {
+      "date": "2026-06-07",
+      "topic": "注意力即核回歸 (Kernelized Attention) – 來自 NeurIPS 2024 《Kernelized Attention: Revisiting Softmax via Kernel Regression》"
     }
   ]
 }

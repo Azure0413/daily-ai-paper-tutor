@@ -127,6 +127,10 @@
     {
       "date": "2026-06-07",
       "topic": "注意力即核回歸 (Kernelized Attention) – 來自 NeurIPS 2024 《Kernelized Attention: Revisiting Softmax via Kernel Regression》"
+    },
+    {
+      "date": "2026-06-08",
+      "topic": "Linformer 2 – 低秩投影化注意力的數學推導與直觀解釋（NeurIPS 2025）"
     }
   ]
 }

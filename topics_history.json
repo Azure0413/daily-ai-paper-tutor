@@ -131,6 +131,10 @@
     {
       "date": "2026-06-08",
       "topic": "Linformer 2 – 低秩投影化注意力的數學推導與直觀解釋（NeurIPS 2025）"
+    },
+    {
+      "date": "2026-06-09",
+      "topic": "Clustered Attention – 以 Token 分群加速自注意力 (ICLR 2022)"
     }
   ]
 }

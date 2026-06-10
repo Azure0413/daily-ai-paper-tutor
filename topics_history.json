@@ -135,6 +135,10 @@
     {
       "date": "2026-06-09",
       "topic": "Clustered Attention – 以 Token 分群加速自注意力 (ICLR 2022)"
+    },
+    {
+      "date": "2026-06-10",
+      "topic": "Blockwise Low‑Rank Attention (BLRA) – 來自 ICLR 2024"
     }
   ]
 }

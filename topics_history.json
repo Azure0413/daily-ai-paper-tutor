@@ -139,6 +139,10 @@
     {
       "date": "2026-06-10",
       "topic": "Blockwise Low‑Rank Attention (BLRA) – 來自 ICLR 2024"
+    },
+    {
+      "date": "2026-06-11",
+      "topic": "Token Merging – 階層式 Token 合併 (ICLR 2022)"
     }
   ]
 }

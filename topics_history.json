@@ -143,6 +143,10 @@
     {
       "date": "2026-06-11",
       "topic": "Token Merging – 階層式 Token 合併 (ICLR 2022)"
+    },
+    {
+      "date": "2026-06-12",
+      "topic": "Stochastic Interpolants – 由 ICLR 2025 《Stochastic Interpolants: A Unified Framework for Diffusion and Flow Models》衍生的數學推導"
     }
   ]
 }

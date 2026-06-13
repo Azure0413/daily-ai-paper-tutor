@@ -147,6 +147,10 @@
     {
       "date": "2026-06-12",
       "topic": "Stochastic Interpolants – 由 ICLR 2025 《Stochastic Interpolants: A Unified Framework for Diffusion and Flow Models》衍生的數學推導"
+    },
+    {
+      "date": "2026-06-13",
+      "topic": "Self‑Conditioned Diffusion Models – 由 ICLR 2025 《Self‑Conditioning Diffusion Models》提出的 ELBO 推導"
     }
   ]
 }

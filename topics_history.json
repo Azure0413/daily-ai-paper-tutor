@@ -151,6 +151,10 @@
     {
       "date": "2026-06-13",
       "topic": "Self‑Conditioned Diffusion Models – 由 ICLR 2025 《Self‑Conditioning Diffusion Models》提出的 ELBO 推導"
+    },
+    {
+      "date": "2026-06-14",
+      "topic": "Diffusion Schrödinger Bridge（DSB）—— 以 Schrödinger Bridge 改善擴散模型抽樣"
     }
   ]
 }

@@ -155,6 +155,10 @@
     {
       "date": "2026-06-14",
       "topic": "Diffusion Schrödinger Bridge（DSB）—— 以 Schrödinger Bridge 改善擴散模型抽樣"
+    },
+    {
+      "date": "2026-06-15",
+      "topic": "Fourier Feature Networks (FFN) – 隨機傅里葉特徵在高頻函數表示中的數學推導"
     }
   ]
 }

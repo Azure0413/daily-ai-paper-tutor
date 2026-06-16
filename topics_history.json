@@ -159,6 +159,10 @@
     {
       "date": "2026-06-15",
       "topic": "Fourier Feature Networks (FFN) – 隨機傅里葉特徵在高頻函數表示中的數學推導"
+    },
+    {
+      "date": "2026-06-16",
+      "topic": "LoRA – 低秩適應於大型語言模型"
     }
   ]
 }

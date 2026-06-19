@@ -171,6 +171,10 @@
     {
       "date": "2026-06-18",
       "topic": "Mediated Attention – 透過中介 Token 降低注意力計算複雜度（NeurIPS 2024）"
+    },
+    {
+      "date": "2026-06-19",
+      "topic": "Funnel‑Transformer – 分層序列下採樣與上採樣的數學推導 (NeurIPS 2024)"
     }
   ]
 }

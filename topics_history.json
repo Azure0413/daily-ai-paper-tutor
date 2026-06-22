@@ -183,6 +183,10 @@
     {
       "date": "2026-06-21",
       "topic": "CosFormer – 以餘弦核重新詮釋 Softmax 注意力 (ICLR 2024)"
+    },
+    {
+      "date": "2026-06-22",
+      "topic": "Entmax‑α 注意力 (Sparse Attention via Entmax) – 來源 ICLR 2025 《Entmax: A Sparse Alternative to Softmax for Attention》"
     }
   ]
 }

@@ -187,6 +187,10 @@
     {
       "date": "2026-06-22",
       "topic": "Entmax‑α 注意力 (Sparse Attention via Entmax) – 來源 ICLR 2025 《Entmax: A Sparse Alternative to Softmax for Attention》"
+    },
+    {
+      "date": "2026-06-23",
+      "topic": "Anderson 加速於深度平衡模型 (Deep Equilibrium Models) — 來源 ICLR 2024 《Anderson Acceleration for Deep Equilibrium Models》"
     }
   ]
 }

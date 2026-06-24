@@ -191,6 +191,10 @@
     {
       "date": "2026-06-23",
       "topic": "Anderson 加速於深度平衡模型 (Deep Equilibrium Models) — 來源 ICLR 2024 《Anderson Acceleration for Deep Equilibrium Models》"
+    },
+    {
+      "date": "2026-06-24",
+      "topic": "TokenLearner – 自適應 Token 選擇於 Vision Transformer (CVPR 2024)"
     }
   ]
 }

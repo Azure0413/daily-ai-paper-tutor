@@ -195,6 +195,10 @@
     {
       "date": "2026-06-24",
       "topic": "TokenLearner – 自適應 Token 選擇於 Vision Transformer (CVPR 2024)"
+    },
+    {
+      "date": "2026-06-25",
+      "topic": "AdaM2‑Plus – 大批次訓練的自適應動量演算法 (NeurIPS 2022)"
     }
   ]
 }

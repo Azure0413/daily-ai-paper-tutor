@@ -199,6 +199,10 @@
     {
       "date": "2026-06-25",
       "topic": "AdaM2‑Plus – 大批次訓練的自適應動量演算法 (NeurIPS 2022)"
+    },
+    {
+      "date": "2026-06-26",
+      "topic": "Anderson 加速於 Deep Equilibrium Model (DEQ) – 數學推導與直觀解釋"
     }
   ]
 }

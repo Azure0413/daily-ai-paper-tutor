@@ -207,6 +207,10 @@
     {
       "date": "2026-06-27",
       "topic": "MOSAIC – Multi‑Scale Overlap‑Aware Self‑Attention (ICCV 2024)"
+    },
+    {
+      "date": "2026-06-28",
+      "topic": "Diffusion Schrödinger Bridge (DSB) – 以 Schrödinger Bridge 改善擴散模型抽樣"
     }
   ]
 }

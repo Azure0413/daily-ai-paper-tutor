@@ -211,6 +211,10 @@
     {
       "date": "2026-06-28",
       "topic": "Diffusion Schrödinger Bridge (DSB) – 以 Schrödinger Bridge 改善擴散模型抽樣"
+    },
+    {
+      "date": "2026-06-29",
+      "topic": "DARTS‑‑: 以梯度正規化穩定可微分架構搜尋 (ICLR 2024)"
     }
   ]
 }

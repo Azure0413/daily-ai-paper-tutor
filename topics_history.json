@@ -223,6 +223,10 @@
     {
       "date": "2026-07-01",
       "topic": "Diffusion Schrödinger Bridge（DSB）—— 以 Schrödinger Bridge 改善擴散模型抽樣"
+    },
+    {
+      "date": "2026-07-02",
+      "topic": "Vision Transformer 的神經切線核 (NTK) 推導"
     }
   ]
 }

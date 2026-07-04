@@ -231,6 +231,10 @@
     {
       "date": "2026-07-03",
       "topic": "Performer++ – 正交隨機特徵提升線性注意力的數學推導"
+    },
+    {
+      "date": "2026-07-04",
+      "topic": "MOSAIC – Multi‑Scale Overlap‑Aware Self‑Attention (ICCV 2024)"
     }
   ]
 }

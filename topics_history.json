@@ -235,6 +235,10 @@
     {
       "date": "2026-07-04",
       "topic": "MOSAIC – Multi‑Scale Overlap‑Aware Self‑Attention (ICCV 2024)"
+    },
+    {
+      "date": "2026-07-05",
+      "topic": "Transformer 的神經切線核 (NTK) 推導"
     }
   ]
 }

@@ -243,6 +243,10 @@
     {
       "date": "2026-07-06",
       "topic": "DARTS‑‑：以梯度正規化穩定可微分架構搜尋"
+    },
+    {
+      "date": "2026-07-07",
+      "topic": "AdaMomentum – Adaptive Momentum for Stochastic Gradient Descent (ICLR 2023)"
     }
   ]
 }

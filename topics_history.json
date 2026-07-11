@@ -259,6 +259,10 @@
     {
       "date": "2026-07-10",
       "topic": "Transformer 神經切線核 (NTK) 推導"
+    },
+    {
+      "date": "2026-07-11",
+      "topic": "Linformer 2 – 低秩投影化注意力的數學推導與直觀解釋（NeurIPS 2025）"
     }
   ]
 }

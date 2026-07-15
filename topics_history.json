@@ -275,6 +275,10 @@
     {
       "date": "2026-07-14",
       "topic": "DPO（Direct Preference Optimization）—— ICLR 2024 《Direct Preference Optimization: Your Language Model is Secretly a Reward Model》"
+    },
+    {
+      "date": "2026-07-15",
+      "topic": "Broyden 法於隱式神經層的加速求解 (ICLR 2024)"
     }
   ]
 }

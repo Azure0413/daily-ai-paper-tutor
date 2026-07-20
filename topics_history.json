@@ -295,6 +295,10 @@
     {
       "date": "2026-07-19",
       "topic": "LION Optimizer – 2024 ICLR 之數學推導"
+    },
+    {
+      "date": "2026-07-20",
+      "topic": "DPO（Direct Preference Optimization）之數學推導與直觀解釋"
     }
   ]
 }

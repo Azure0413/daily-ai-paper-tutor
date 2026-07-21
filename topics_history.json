@@ -299,6 +299,10 @@
     {
       "date": "2026-07-20",
       "topic": "DPO（Direct Preference Optimization）之數學推導與直觀解釋"
+    },
+    {
+      "date": "2026-07-21",
+      "topic": "LLaVA‑Pretrain – 大規模視覺語言模型的預訓練目標與梯度推導"
     }
   ]
 }

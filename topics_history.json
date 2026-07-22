@@ -303,6 +303,10 @@
     {
       "date": "2026-07-21",
       "topic": "LLaVA‑Pretrain – 大規模視覺語言模型的預訓練目標與梯度推導"
+    },
+    {
+      "date": "2026-07-22",
+      "topic": "FlashAttention‑2 – 低記憶體且高速的注意力演算法（NeurIPS 2023）"
     }
   ]
 }

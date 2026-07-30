@@ -335,6 +335,10 @@
     {
       "date": "2026-07-29",
       "topic": "AdaM‑2‑Plus – 大批次訓練的自適應二階動量優化器 (基於已發表的 AdaHessian)"
+    },
+    {
+      "date": "2026-07-30",
+      "topic": "LION Optimizer – 大規模深度學習的高效一階優化器 (ICLR 2024)**"
     }
   ]
 }

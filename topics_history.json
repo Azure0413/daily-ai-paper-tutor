@@ -339,6 +339,10 @@
     {
       "date": "2026-07-30",
       "topic": "LION Optimizer – 大規模深度學習的高效一階優化器 (ICLR 2024)**"
+    },
+    {
+      "date": "2026-07-31",
+      "topic": "Broyden 法於隱式神經層的加速求解（ICLR 2024 《Broyden’s Method for Accelerating Implicit Neural Networks》）"
     }
   ]
 }

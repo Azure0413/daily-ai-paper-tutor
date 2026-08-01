@@ -343,6 +343,10 @@
     {
       "date": "2026-07-31",
       "topic": "Broyden 法於隱式神經層的加速求解（ICLR 2024 《Broyden’s Method for Accelerating Implicit Neural Networks》）"
+    },
+    {
+      "date": "2026-08-01",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning"
     }
   ]
 }

@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-05-16",
-      "topic": "圖神經切線核 (Graph Neural Tangent Kernel, GNTK) – 來自 ICLR 2025 之《Graph Neural Tangent Kernel: A Unified Theory of Graph Deep Learning》"
-    },
-    {
       "date": "2026-05-17",
       "topic": "Adaptive Step‑Size Continuous Normalizing Flow (AS‑CNF)"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-08-13",
       "topic": "Expert Choice Routing for Mixture‑of‑Experts (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-08-14",
+      "topic": "AdaM2‑Plus – 大批次訓練的自適應二階動量優化器 (基於 AdaM2, NeurIPS 2020)"
     }
   ]
 }

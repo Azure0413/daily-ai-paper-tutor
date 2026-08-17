@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-05-19",
-      "topic": "Nyströmformer – 以 Nyström 方法近似自注意力的數學推導（NeurIPS 2024）"
-    },
-    {
       "date": "2026-05-20",
       "topic": "AdaNorm – 自適應正規化於深層神經網路的數學推導 (arXiv 2024)"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-08-16",
       "topic": "LION Optimizer – 大主題: LION Optimizer – 大規模優化器的數學推導與直觀解釋（ICLR 2024）"
+    },
+    {
+      "date": "2026-08-17",
+      "topic": "Mamba 3 – 結構化狀態空間模型的數學推導與長序列高效實作 (NeurIPS 2025)"
     }
   ]
 }

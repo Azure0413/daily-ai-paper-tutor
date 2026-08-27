@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-05-28",
-      "topic": "Random Feature Attention (RFA) – 以隨機特徵近似 Softmax 注意力的數學推導"
-    },
-    {
       "date": "2026-05-29",
       "topic": "Consistency Models – 一步生成的數學原理與推導（ICLR 2023）"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-08-26",
       "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)**"
+    },
+    {
+      "date": "2026-08-27",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (ICLR 2025)"
     }
   ]
 }

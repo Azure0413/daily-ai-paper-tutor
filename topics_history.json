@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-06-05",
-      "topic": "Rotary Positional Embedding (RoPE) – 旋轉式位置編碼"
-    },
-    {
       "date": "2026-06-06",
       "topic": "FlashAttention‑2 – 低記憶體且高速的注意力演算法（NeurIPS 2024）"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-09-03",
       "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (arXiv 2024)"
+    },
+    {
+      "date": "2026-09-04",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)"
     }
   ]
 }

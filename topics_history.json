@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-06-16",
-      "topic": "LoRA – 低秩適應於大型語言模型"
-    },
-    {
       "date": "2026-06-17",
       "topic": "FAVOR++ – 改良的隨機特徵注意力 (ICLR 2025)"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-09-14",
       "topic": "Adaptive Checkpointing"
+    },
+    {
+      "date": "2026-09-15",
+      "topic": "自適應步長神經常微分方程 (Adaptive Step‑Size Neural ODE, NeurIPS 2024)"
     }
   ]
 }

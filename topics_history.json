@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-06-20",
-      "topic": "CosFormer – 以餘弦核重新詮釋 Softmax 注意力 (ICLR 2024)"
-    },
-    {
       "date": "2026-06-21",
       "topic": "CosFormer – 以餘弦核重新詮釋 Softmax 注意力 (ICLR 2024)"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-09-18",
       "topic": "𝙎𝙚𝙦𝙪𝙚𝙣𝙘𝙚‑𝙎𝙚𝙥𝙖𝙧𝙖𝙩𝙚𝙙 𝙎𝙩𝙖𝙩𝙚‑𝙎𝙥𝙖𝙘𝙚 𝙍𝙚𝙘𝙪𝙧𝙧𝙚𝙣𝙩𝙨 (S4‑R) – 來自 NeurIPS 2024**"
+    },
+    {
+      "date": "2026-09-19",
+      "topic": "Adaptive Gradient Clipping (AGC) – 讓梯度裁剪更具尺度感的數學推導**"
     }
   ]
 }

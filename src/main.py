@@ -2,6 +2,7 @@ import sys
 from groq_client import (
     call_groq, call_groq_complete, truncate_review,
     MODEL_WITH_SEARCH, MODEL_REASONING,
+    SEARCH_TOOLS, SEARCH_TOOL_CHOICE, SEARCH_REASONING_EFFORT,
 )
 from prompts import (
     GENERATOR_SYSTEM, generator_user_prompt,
@@ -33,6 +34,9 @@ def run():
         max_tokens=1800,
         temperature=0.7,
         max_continuations=3,
+        tools=SEARCH_TOOLS,
+        tool_choice=SEARCH_TOOL_CHOICE,
+        reasoning_effort=SEARCH_REASONING_EFFORT,
     )
     print(f"[R1] draft = {len(draft)} chars")
 

@@ -5,15 +5,27 @@ from groq import Groq, APIStatusError
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
-# 內建 web search,Round 1 使用。compound-mini = single tool call、低 token 開銷
-MODEL_WITH_SEARCH = "groq/compound-mini"
+# groq/compound-mini 已於 2026-09-21 由 Groq 官方下架(decommissioned),
+# 該 model id 現在一律回傳 400/404 model_not_found。
+# 官方遷移路徑:改用一般推理模型 + 內建 browser_search tool(僅 gpt-oss 系列支援)。
+# 參考:https://console.groq.com/docs/tool-use/built-in-tools/browser-search
+#      https://console.groq.com/docs/deprecations
+MODEL_WITH_SEARCH = "openai/gpt-oss-120b"
+# Round 1 呼叫時要帶的 tool 設定,啟用 browser_search 並強制使用(tool_choice="required"),
+# reasoning_effort 用 low 以避免瀏覽過久、吃過多 token(官方 best practice 建議)。
+SEARCH_TOOLS = [{"type": "browser_search"}]
+SEARCH_TOOL_CHOICE = "required"
+SEARCH_REASONING_EFFORT = "low"
 # 強推理模型,用於 Round 2~5
 MODEL_REASONING = "openai/gpt-oss-120b"
 
 
 def _call_groq_raw(model: str, system: str, user: str,
                    max_tokens: int, temperature: float,
-                   max_retries: int = 4) -> tuple[str, str]:
+                   max_retries: int = 4,
+                   tools: list | None = None,
+                   tool_choice: str | None = None,
+                   reasoning_effort: str | None = None) -> tuple[str, str]:
     """底層呼叫,回傳 (text, finish_reason)。
     finish_reason 依 Groq/OpenAI 規格:'stop' (正常結束) / 'length' (撞到 max_tokens) /
     'tool_calls' / 'content_filter' 等。
@@ -22,7 +34,7 @@ def _call_groq_raw(model: str, system: str, user: str,
     current_max = max_tokens
     for attempt in range(max_retries):
         try:
-            resp = client.chat.completions.create(
+            kwargs = dict(
                 model=model,
                 messages=[
                     {"role": "system", "content": system},
@@ -31,6 +43,13 @@ def _call_groq_raw(model: str, system: str, user: str,
                 temperature=temperature,
                 max_completion_tokens=current_max,
             )
+            if tools:
+                kwargs["tools"] = tools
+            if tool_choice:
+                kwargs["tool_choice"] = tool_choice
+            if reasoning_effort:
+                kwargs["reasoning_effort"] = reasoning_effort
+            resp = client.chat.completions.create(**kwargs)
             choice = resp.choices[0]
             text = (choice.message.content or "").strip()
             finish_reason = choice.finish_reason or "unknown"
@@ -51,6 +70,10 @@ def _call_groq_raw(model: str, system: str, user: str,
                 print(f"[Groq] 429 -> wait {wait}s")
                 time.sleep(wait)
                 continue
+            if status in (400, 404):
+                # model_not_found / invalid_request:重試不會變好,直接中止避免浪費時間
+                print(f"[Groq] {status} looks permanent (bad model id / request), aborting retries")
+                raise
             time.sleep(2 ** attempt)
 
         except Exception as e:
@@ -64,9 +87,14 @@ def _call_groq_raw(model: str, system: str, user: str,
 
 def call_groq(model: str, system: str, user: str,
               max_tokens: int = 1500,
-              temperature: float = 0.4) -> str:
+              temperature: float = 0.4,
+              tools: list | None = None,
+              tool_choice: str | None = None,
+              reasoning_effort: str | None = None) -> str:
     """單次呼叫,只回傳 text。給短輸出 (critic / aggregator) 用。"""
-    text, _ = _call_groq_raw(model, system, user, max_tokens, temperature)
+    text, _ = _call_groq_raw(model, system, user, max_tokens, temperature,
+                              tools=tools, tool_choice=tool_choice,
+                              reasoning_effort=reasoning_effort)
     return text
 
 
@@ -91,7 +119,10 @@ def looks_complete(text: str) -> bool:
 def call_groq_complete(model: str, system: str, user: str,
                        max_tokens: int = 1800,
                        temperature: float = 0.4,
-                       max_continuations: int = 3) -> str:
+                       max_continuations: int = 3,
+                       tools: list | None = None,
+                       tool_choice: str | None = None,
+                       reasoning_effort: str | None = None) -> str:
     """長輸出用。若 finish_reason=='length' 或結尾不像寫完,
     自動用 continuation prompt 續寫,直到 finish_reason=='stop' 或達到上限。
     
@@ -103,7 +134,8 @@ def call_groq_complete(model: str, system: str, user: str,
 
     for round_num in range(max_continuations + 1):
         text, finish_reason = _call_groq_raw(
-            model, system, current_user, max_tokens, temperature
+            model, system, current_user, max_tokens, temperature,
+            tools=tools, tool_choice=tool_choice, reasoning_effort=reasoning_effort,
         )
         full = (full + text) if round_num > 0 else text
         print(f"[Groq] call {round_num+1}: finish_reason={finish_reason}, "

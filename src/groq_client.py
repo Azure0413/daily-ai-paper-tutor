@@ -133,9 +133,16 @@ def call_groq_complete(model: str, system: str, user: str,
     current_user = user
 
     for round_num in range(max_continuations + 1):
+        # tool_choice="required" 只能用在第一次呼叫(真正需要 search 的那次)。
+        # 續寫呼叫只是接著寫已生成的文字,模型不會再呼叫工具,若仍強制 tool_choice
+        # 會被 Groq 拒絕 (400 tool_use_failed: "Tool choice is required, but
+        # model did not call a tool")。所以從第二輪開始不帶 tools/tool_choice。
+        call_tools = tools if round_num == 0 else None
+        call_tool_choice = tool_choice if round_num == 0 else None
         text, finish_reason = _call_groq_raw(
             model, system, current_user, max_tokens, temperature,
-            tools=tools, tool_choice=tool_choice, reasoning_effort=reasoning_effort,
+            tools=call_tools, tool_choice=call_tool_choice,
+            reasoning_effort=reasoning_effort,
         )
         full = (full + text) if round_num > 0 else text
         print(f"[Groq] call {round_num+1}: finish_reason={finish_reason}, "

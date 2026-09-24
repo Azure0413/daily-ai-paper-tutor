@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-06-25",
-      "topic": "AdaM2‑Plus – 大批次訓練的自適應動量演算法 (NeurIPS 2022)"
-    },
-    {
       "date": "2026-06-26",
       "topic": "Anderson 加速於 Deep Equilibrium Model (DEQ) – 數學推導與直觀解釋"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-09-23",
       "topic": "Kernelized Attention with Random Features (KAF) – Spectraformer (ICLR 2024)**"
+    },
+    {
+      "date": "2026-09-24",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
     }
   ]
 }

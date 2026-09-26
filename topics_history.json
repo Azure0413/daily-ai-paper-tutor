@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-06-27",
-      "topic": "MOSAIC – Multi‑Scale Overlap‑Aware Self‑Attention (ICCV 2024)"
-    },
-    {
       "date": "2026-06-28",
       "topic": "Diffusion Schrödinger Bridge (DSB) – 以 Schrödinger Bridge 改善擴散模型抽樣"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-09-25",
       "topic": "重新設計 Diffusion 模型的噪聲排程 – 以 log‑SNR weighted diffusion (log‑SNR importance sampling) 調整噪聲抽樣"
+    },
+    {
+      "date": "2026-09-26",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂分析"
     }
   ]
 }

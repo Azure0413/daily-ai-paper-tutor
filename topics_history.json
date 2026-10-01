@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-02",
-      "topic": "Vision Transformer 的神經切線核 (NTK) 推導"
-    },
-    {
       "date": "2026-07-03",
       "topic": "Performer++ – 正交隨機特徵提升線性注意力的數學推導"
     },
@@ -358,6 +354,10 @@
     },
     {
       "date": "2026-09-30",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
+    },
+    {
+      "date": "2026-10-01",
       "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
     }
   ]

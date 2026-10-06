@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-07",
-      "topic": "AdaMomentum – Adaptive Momentum for Stochastic Gradient Descent (ICLR 2023)"
-    },
-    {
       "date": "2026-07-08",
       "topic": "Performer++ – 正交隨機特徵提升線性注意力的數學推導 (ICLR 2025)"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-10-05",
       "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
+    },
+    {
+      "date": "2026-10-06",
+      "topic": "Regularized‑Gradient‑Clipping (‑GClip) 的數學推導與收斂分析"
     }
   ]
 }

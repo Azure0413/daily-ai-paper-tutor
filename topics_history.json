@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-08",
-      "topic": "Performer++ – 正交隨機特徵提升線性注意力的數學推導 (ICLR 2025)"
-    },
-    {
       "date": "2026-07-09",
       "topic": "S4D – 對角化狀態空間模型 (NeurIPS 2024)"
     },
@@ -359,6 +355,10 @@
     {
       "date": "2026-10-06",
       "topic": "Regularized‑Gradient‑Clipping (‑GClip) 的數學推導與收斂分析"
+    },
+    {
+      "date": "2026-10-07",
+      "topic": "Regularized Gradient Clipping (‑GClip) – ICLR 2024 《Regularized Gradient Clipping Provably Trains Wide and Deep Neural Networks》"
     }
   ]
 }

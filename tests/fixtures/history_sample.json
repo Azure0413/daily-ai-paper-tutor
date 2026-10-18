@@ -1,0 +1,364 @@
+{
+  "topics": [
+    {
+      "date": "2026-07-19",
+      "topic": "LION Optimizer – 2024 ICLR 之數學推導"
+    },
+    {
+      "date": "2026-07-20",
+      "topic": "DPO（Direct Preference Optimization）之數學推導與直觀解釋"
+    },
+    {
+      "date": "2026-07-21",
+      "topic": "LLaVA‑Pretrain – 大規模視覺語言模型的預訓練目標與梯度推導"
+    },
+    {
+      "date": "2026-07-22",
+      "topic": "FlashAttention‑2 – 低記憶體且高速的注意力演算法（NeurIPS 2023）"
+    },
+    {
+      "date": "2026-07-23",
+      "topic": "AdaM2 – 大批次訓練的自適應動量演算法 (ICLR 2024)"
+    },
+    {
+      "date": "2026-07-24",
+      "topic": "LION 優化器的數學推導與直觀解釋**"
+    },
+    {
+      "date": "2026-07-25",
+      "topic": "文本生成的接續策略"
+    },
+    {
+      "date": "2026-07-26",
+      "topic": "LLaMA‑Adapter V2 – 大規模語言模型的輕量化微調 (ACL 2024)"
+    },
+    {
+      "date": "2026-07-27",
+      "topic": "LION Optimizer – 2024 ICLR “Large‑Scale Optimizer for Deep Learning”**"
+    },
+    {
+      "date": "2026-07-28",
+      "topic": "線性迴歸的最小平方法與梯度下降實作"
+    },
+    {
+      "date": "2026-07-29",
+      "topic": "AdaM‑2‑Plus – 大批次訓練的自適應二階動量優化器 (基於已發表的 AdaHessian)"
+    },
+    {
+      "date": "2026-07-30",
+      "topic": "LION Optimizer – 大規模深度學習的高效一階優化器 (ICLR 2024)**"
+    },
+    {
+      "date": "2026-07-31",
+      "topic": "Broyden 法於隱式神經層的加速求解（ICLR 2024 《Broyden’s Method for Accelerating Implicit Neural Networks》）"
+    },
+    {
+      "date": "2026-08-01",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning"
+    },
+    {
+      "date": "2026-08-02",
+      "topic": "文本接續的數學原理與說明"
+    },
+    {
+      "date": "2026-08-03",
+      "topic": "LLaVA‑Pretrain – 大規模視覺‑語言模型的預訓練目標與梯度推導"
+    },
+    {
+      "date": "2026-08-04",
+      "topic": "**AdaM2‑Plus – 大批次訓練的自適應二階動量優化器**（ICLR 2025）"
+    },
+    {
+      "date": "2026-08-05",
+      "topic": "Mamba 3 – 結構化狀態空間模型的數學推導與長序列高效實作 (NeurIPS 2025)"
+    },
+    {
+      "date": "2026-08-06",
+      "topic": "AdaM2‑Plus：針對大批次訓練的二階動量自適應優化器"
+    },
+    {
+      "date": "2026-08-07",
+      "topic": "Performer – 正交隨機特徵提升線性注意力的數學推導"
+    },
+    {
+      "date": "2026-08-08",
+      "topic": "AdaLoRA 在微調中的自適應低秩機制"
+    },
+    {
+      "date": "2026-08-09",
+      "topic": "Expert Choice Routing for Mixture‑of‑Experts (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-08-10",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning"
+    },
+    {
+      "date": "2026-08-11",
+      "topic": "S4D – 對角化狀態空間模型 (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-08-12",
+      "topic": "Mamba 2 – 高效結構化狀態空間模型 (State‑Space Model)"
+    },
+    {
+      "date": "2026-08-13",
+      "topic": "Expert Choice Routing for Mixture‑of‑Experts (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-08-14",
+      "topic": "AdaM2‑Plus – 大批次訓練的自適應二階動量優化器 (基於 AdaM2, NeurIPS 2020)"
+    },
+    {
+      "date": "2026-08-15",
+      "topic": "Mamba 2 – 高效結構化狀態空間模型 (NeurIPS 2024)"
+    },
+    {
+      "date": "2026-08-16",
+      "topic": "LION Optimizer – 大主題: LION Optimizer – 大規模優化器的數學推導與直觀解釋（ICLR 2024）"
+    },
+    {
+      "date": "2026-08-17",
+      "topic": "Mamba 3 – 結構化狀態空間模型的數學推導與長序列高效實作 (NeurIPS 2025)"
+    },
+    {
+      "date": "2026-08-18",
+      "topic": "教學文章續寫說明"
+    },
+    {
+      "date": "2026-08-19",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)"
+    },
+    {
+      "date": "2026-08-20",
+      "topic": "LION 優化器的數學推導"
+    },
+    {
+      "date": "2026-08-21",
+      "topic": "Lion: A Fast Optimizer for Large‑Scale Training (ICLR 2024)"
+    },
+    {
+      "date": "2026-08-22",
+      "topic": "教學文章的無縫接續寫作指南"
+    },
+    {
+      "date": "2026-08-23",
+      "topic": "AdaNorm 優化器 – 來源 ICLR 2022 (或 2023) ‘AdaNorm: Adaptive Normalization for Deep Learning Optimizers’, Liu et al."
+    },
+    {
+      "date": "2026-08-25",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)"
+    },
+    {
+      "date": "2026-08-26",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)**"
+    },
+    {
+      "date": "2026-08-27",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (ICLR 2025)"
+    },
+    {
+      "date": "2026-08-28",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (未發表工作)"
+    },
+    {
+      "date": "2026-08-29",
+      "topic": "AdaM2 – 大批次訓練的自適應動量優化器 (ICLR 2024)"
+    },
+    {
+      "date": "2026-08-30",
+      "topic": "AdaDiff – 自適應噪聲排程的擴散模型 (ICLR 2025)"
+    },
+    {
+      "date": "2026-08-31",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (ICLR 2025)"
+    },
+    {
+      "date": "2026-09-01",
+      "topic": "Adan Optimizer – Adaptive Nesterov Momentum Algorithm (NeurIPS 2022)"
+    },
+    {
+      "date": "2026-09-02",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器"
+    },
+    {
+      "date": "2026-09-03",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (arXiv 2024)"
+    },
+    {
+      "date": "2026-09-04",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)"
+    },
+    {
+      "date": "2026-09-05",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階自適應動量優化器"
+    },
+    {
+      "date": "2026-09-06",
+      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning (ICLR 2024)**"
+    },
+    {
+      "date": "2026-09-07",
+      "topic": "Expert Choice Routing for Mixture‑of‑Experts (ICLR 2023, Liu et al.)"
+    },
+    {
+      "date": "2026-09-08",
+      "topic": "Kernelized Attention with Random Features (KAF) – ICLR 2024"
+    },
+    {
+      "date": "2026-09-09",
+      "topic": "Mamba 3 – 結構化狀態空間模型的數學推導（NeurIPS 2025）"
+    },
+    {
+      "date": "2026-09-10",
+      "topic": "Mamba 3 – 結構化狀態空間模型的數學推導與長序列高效實作"
+    },
+    {
+      "date": "2026-09-11",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階動量自適應優化器 (ICLR 2025)"
+    },
+    {
+      "date": "2026-09-12",
+      "topic": "Mamba‑2 – 結構化狀態空間模型的數學推導與長序列高效實作"
+    },
+    {
+      "date": "2026-09-13",
+      "topic": "Mamba 3 – 結構化狀態空間模型的數學推導"
+    },
+    {
+      "date": "2026-09-14",
+      "topic": "Adaptive Checkpointing"
+    },
+    {
+      "date": "2026-09-15",
+      "topic": "自適應步長神經常微分方程 (Adaptive Step‑Size Neural ODE, NeurIPS 2024)"
+    },
+    {
+      "date": "2026-09-16",
+      "topic": "Mamba – 結構化狀態空間模型的數學推導與長序列高效實作"
+    },
+    {
+      "date": "2026-09-17",
+      "topic": "Kernelized Attention with Random Features (KAF) – ICLR 2024"
+    },
+    {
+      "date": "2026-09-18",
+      "topic": "𝙎𝙚𝙦𝙪𝙚𝙣𝙘𝙚‑𝙎𝙚𝙥𝙖𝙧𝙖𝙩𝙚𝙙 𝙎𝙩𝙖𝙩𝙚‑𝙎𝙥𝙖𝙘𝙚 𝙍𝙚𝙘𝙪𝙧𝙧𝙚𝙣𝙩𝙨 (S4‑R) – 來自 NeurIPS 2024**"
+    },
+    {
+      "date": "2026-09-19",
+      "topic": "Adaptive Gradient Clipping (AGC) – 讓梯度裁剪更具尺度感的數學推導**"
+    },
+    {
+      "date": "2026-09-20",
+      "topic": "自適應步長神經常微分方程 (Adaptive Step‑Size Neural ODE) – NeurIPS 2024**"
+    },
+    {
+      "date": "2026-09-21",
+      "topic": "AdaM2‑Plus – 大批次訓練的二階自適應動量優化器 (NeurIPS 2025)"
+    },
+    {
+      "date": "2026-09-23",
+      "topic": "Revisiting Noise Schedule Design for Diffusion Training (ICLR 2025)**"
+    },
+    {
+      "date": "2026-09-23",
+      "topic": "Kernelized Attention with Random Features (KAF) – Spectraformer (ICLR 2024)**"
+    },
+    {
+      "date": "2026-09-24",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
+    },
+    {
+      "date": "2026-09-25",
+      "topic": "重新設計 Diffusion 模型的噪聲排程 – 以 log‑SNR weighted diffusion (log‑SNR importance sampling) 調整噪聲抽樣"
+    },
+    {
+      "date": "2026-09-26",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂分析"
+    },
+    {
+      "date": "2026-09-27",
+      "topic": "MGUP – Momentum‑Gradient Alignment Update Policy (示例說明)"
+    },
+    {
+      "date": "2026-09-28",
+      "topic": "AdaDiff – 以策略梯度學習的自適應噪聲步數選擇 (CVPR 2023)"
+    },
+    {
+      "date": "2026-09-29",
+      "topic": "Regularized Gradient Clipping (‑GClip) – 2024 NeurIPS 論文《Regularized Gradient Clipping Provably Trains Wide and Deep Neural Networks》**"
+    },
+    {
+      "date": "2026-09-30",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
+    },
+    {
+      "date": "2026-10-01",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
+    },
+    {
+      "date": "2026-10-02",
+      "topic": "AdaDiff – 以策略梯度學習的自適應步數選擇 (ICLR 2023)"
+    },
+    {
+      "date": "2026-10-03",
+      "topic": "Revisiting Noise Schedule Design for Diffusion Training (ICLR 2025)"
+    },
+    {
+      "date": "2026-10-04",
+      "topic": "δ‑GClip —— 正則化梯度裁剪的數學推導與收斂分析（NeurIPS 2024）"
+    },
+    {
+      "date": "2026-10-05",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024**"
+    },
+    {
+      "date": "2026-10-06",
+      "topic": "Regularized‑Gradient‑Clipping (‑GClip) 的數學推導與收斂分析"
+    },
+    {
+      "date": "2026-10-07",
+      "topic": "Regularized Gradient Clipping (‑GClip) – ICLR 2024 《Regularized Gradient Clipping Provably Trains Wide and Deep Neural Networks》"
+    },
+    {
+      "date": "2026-10-08",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂分析"
+    },
+    {
+      "date": "2026-10-09",
+      "topic": "Random Maclaurin Feature Attention (RMFA) – 由 Macformer 之論文「Macformer: Transformer with Random Maclaurin Feature Attention」(arXiv 2408.11656, 2024)"
+    },
+    {
+      "date": "2026-10-10",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂分析**"
+    },
+    {
+      "date": "2026-10-11",
+      "topic": "Kernelized Attention with Random Features (Spectraformer) – ICLR 2024"
+    },
+    {
+      "date": "2026-10-12",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂保證"
+    },
+    {
+      "date": "2026-10-13",
+      "topic": "Expert Choice Routing for Mixture‑of‑Experts (MoE) – 數學原理與推導**"
+    },
+    {
+      "date": "2026-10-14",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂分析**"
+    },
+    {
+      "date": "2026-10-15",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂分析"
+    },
+    {
+      "date": "2026-10-16",
+      "topic": "δ‑GClip – 正則化梯度裁剪的數學推導與收斂保證"
+    },
+    {
+      "date": "2026-10-17",
+      "topic": "Regularized‑GClip – 正則化梯度裁剪的數學推導與收斂保證"
+    }
+  ]
+}

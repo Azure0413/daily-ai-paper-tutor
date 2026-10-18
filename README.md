@@ -9,7 +9,9 @@
 參考 **Self-Refine** (Madaan et al., NeurIPS 2023)、**Reflexion** (Shinn et al., NeurIPS 2023)、**Mixture-of-Agents** (Wang et al., 2024)、**MAD with Summarizer** (Smit et al., 2023)、**SID** (Sun et al., 2025) 的設計原則。
 
 ```
-Round 1: Generator (groq/compound-mini + web search)
+Round 1a: Picker (gpt-oss-120b + browser_search) → 一行 JSON {title, arxiv_id, venue}
+Round 1b: arXiv 驗證 + 去重 (程式,不經 LLM) → 通過才進入寫作
+Round 1c: Writer (gpt-oss-120b,不帶工具;拿到真實摘要) → draft
               │ draft
    ┌──────────┼──────────┐
 Round 2     Round 3     Round 4
@@ -25,11 +27,18 @@ Math Critic  Concept    Format
 
 ---
 
-### Round 1 — Generator
+### Round 1 — Picker / 驗證 / Writer
 
-使用 `groq/compound-mini` 內建的 web search 工具,搜尋 2024–2026 NeurIPS / ICLR / ICML / CVPR 的演算法主題,產生初版教學草稿。`compound-mini` 比 `compound` 限制為 single tool call、latency 低 3×,token 開銷低很多,適合「搜一次 + 生成」的單純情境。
+**為什麼拆成三步?** 實際跑過 90 天後發現:
+1. LLM 用 `browser_search` 挑 paper 時會編出不存在的 paper (標題、作者、會議混搭),而且同一個 paper 會換個說法反覆出現 (歷史檔 90 筆只有約 54 個不重複主題)。
+2. `tool_choice="required"` 時 gpt-oss 偶爾直接寫答案不呼叫工具,Groq 回 `400 tool_use_failed`。
 
-Prompt 強制限制主題範圍為「演算法 / 數學推導層面」(reparameterization、ELBO、score matching、attention 等價變形、LoRA 低秩分解、GRPO …),排除純應用、純 benchmark、純工程 trick。同時附上 `topics_history.json` 中已教過的主題清單,要求模型避開。
+所以:
+- **1a Picker**:`browser_search` + `tool_choice="required"`,但只輸出一行 JSON (短輸出,失敗成本低);`tool_use_failed` 視為暫時性錯誤自動重試。
+- **1b 驗證 (程式)**:用 arXiv API 確認 paper 存在、標題吻合;查無此 paper → 拒絕並換候選。再以 arXiv id 去重 (舊資料退回標題比對)。arXiv 連不上時降級為「未驗證」並在訊息尾端標註。
+- **1c Writer**:不帶工具,拿到 arXiv 真實標題 / 作者 / 摘要才寫。若 paper 沒有可教學的數學核心,回 `SKIP` 換下一個候選。
+
+文章尾端的「出處」行由程式用 arXiv metadata 產生,不由 LLM 寫。
 
 ---
 
@@ -93,12 +102,28 @@ Prompt 強制限制主題範圍為「演算法 / 數學推導層面」(reparamet
 
 ### Continuation 機制
 
-長輸出 (Round 1、Round 5) 會偵測 Groq API 回傳的 `finish_reason`:
+長輸出 (Writer、Refiner) 只在 `finish_reason == "length"` (真的被截斷) 時續寫,用多輪對話格式 (assistant 已寫的部分 + 「請接著寫」),最多 2 次,並自動去除模型重複的重疊段落。模型自己 `stop` 就視為寫完,不會硬續。
 
-- `finish_reason == "length"` → 撞到 `max_tokens`,自動續寫
-- `finish_reason == "stop"` 但結尾無收尾關鍵字/標點 → 模型誤判已寫完,仍續寫
+> gpt-oss 是 reasoning model,reasoning tokens 也算在 `max_completion_tokens` 內。空輸出 + `finish_reason=length` = 預算被思考吃光,程式會自動加大預算重試。
 
-續寫 prompt 只給尾巴 1500 字當上下文,要求無縫接續、禁止重複、禁止寫「以下接續」開場白。最多 3 輪 continuation,實際通常 1–2 輪即收尾。這對應 OpenAI / Groq 官方的 streaming continuation pattern。
+---
+
+## 穩定性設計
+
+| 問題 | 處理 |
+|---|---|
+| `400 tool_use_failed` (模型沒呼叫工具) | 視為暫時性錯誤,重試;其他 400 才是永久錯誤 |
+| 429 | 依 `retry-after` 等待;>300 秒視為日額度用盡 → 換備援 model |
+| 413 (free tier 單次 8K TPM) | 解析 `Limit / Requested`,精準縮減 `max_tokens` |
+| 主 model 不可用 | 自動換 `openai/gpt-oss-20b` (可用環境變數 `GROQ_MODEL` / `GROQ_FALLBACK_MODEL` 覆寫) |
+| 單一 critic 失敗 | 該份審查視為缺席並在訊息標註,不中斷整條 pipeline |
+| Refiner 輸出被截斷 / 太短 | 驗證失敗 → 退回已通過驗證的草稿 |
+| 最終文章不合格 (太短 / 缺「一句話總結」) | 不發送,Discord 收到失敗通知 |
+| Discord 送出失敗 | raise (不再默默當成功);先送出成功才寫歷史 |
+| LLM 輸出 `@everyone` | `allowed_mentions` 全關 |
+| 歷史檔毀損 | 明確報錯,不覆寫 |
+
+`python -m pytest -q` 以 mock 驗證上述行為 (不吃 Groq 額度),push / PR 時由 `tests.yml` 自動執行 (與每日排程分開,測試壞掉不會害當天發不出去)。
 
 ---
 
@@ -106,8 +131,9 @@ Prompt 強制限制主題範圍為「演算法 / 數學推導層面」(reparamet
 
 | 用途 | 模型 | 選用原因 |
 |---|---|---|
-| Round 1 | `groq/compound-mini` | 內建 web search,single tool call,latency 低、token 開銷小 |
-| Round 2–5 | `openai/gpt-oss-120b` | Groq 免費層最強 reasoning model |
+| Round 1a | `openai/gpt-oss-120b` + `browser_search` | `groq/compound-mini` 已於 2026-09-21 下架,改用 gpt-oss 內建瀏覽工具 |
+| Round 1c–5 | `openai/gpt-oss-120b` | Groq 免費層最強 reasoning model |
+| 備援 | `openai/gpt-oss-20b` | 獨立的 TPM/TPD 額度 |
 
 皆為 Groq free tier,無需信用卡。
 

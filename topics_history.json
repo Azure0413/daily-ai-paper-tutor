@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-20",
-      "topic": "DPO（Direct Preference Optimization）之數學推導與直觀解釋"
-    },
-    {
       "date": "2026-07-21",
       "topic": "LLaVA‑Pretrain – 大規模視覺語言模型的預訓練目標與梯度推導"
     },
@@ -361,6 +357,12 @@
       "topic": "凸體均勻抽樣的「In-and-Out」演算法教學",
       "arxiv_id": "2405.01425",
       "title": "In-and-Out: Algorithmic Diffusion for Sampling Convex Bodies"
+    },
+    {
+      "date": "2026-10-19",
+      "topic": "針對擴散模型的演算法與資料依賴一般化界限(ICML 2025,arXiv:2401.12345)",
+      "arxiv_id": "2506.03849",
+      "title": "Algorithm- and Data-Dependent Generalization Bounds for Diffusion Models"
     }
   ]
 }

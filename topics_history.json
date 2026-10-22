@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-23",
-      "topic": "AdaM2 – 大批次訓練的自適應動量演算法 (ICLR 2024)"
-    },
-    {
       "date": "2026-07-24",
       "topic": "LION 優化器的數學推導與直觀解釋**"
     },
@@ -367,6 +363,12 @@
       "topic": "簡化與廣義化的遮蔽擴散模型(Masked Diffusion)在離散資料上的原理與推導",
       "arxiv_id": "2406.04329",
       "title": "Simplified and Generalized Masked Diffusion for Discrete Data"
+    },
+    {
+      "date": "2026-10-22",
+      "topic": "學習離散化去噪擴散 ODE 的方法",
+      "arxiv_id": "2405.15506",
+      "title": "Learning to Discretize Denoising Diffusion ODEs"
     }
   ]
 }

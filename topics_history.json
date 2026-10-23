@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-24",
-      "topic": "LION 優化器的數學推導與直觀解釋**"
-    },
-    {
       "date": "2026-07-25",
       "topic": "文本生成的接續策略"
     },
@@ -369,6 +365,12 @@
       "topic": "學習離散化去噪擴散 ODE 的方法",
       "arxiv_id": "2405.15506",
       "title": "Learning to Discretize Denoising Diffusion ODEs"
+    },
+    {
+      "date": "2026-10-23",
+      "topic": "稀有事件建模與自我正則化正規化流 (CalNF) 的直觀與數學基礎",
+      "arxiv_id": "2502.21110",
+      "title": "Rare event modeling with self-regularized normalizing flows: what can we learn from a single failure?"
     }
   ]
 }

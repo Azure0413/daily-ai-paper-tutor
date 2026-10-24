@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-25",
-      "topic": "文本生成的接續策略"
-    },
-    {
       "date": "2026-07-26",
       "topic": "LLaMA‑Adapter V2 – 大規模語言模型的輕量化微調 (ACL 2024)"
     },
@@ -371,6 +367,12 @@
       "topic": "稀有事件建模與自我正則化正規化流 (CalNF) 的直觀與數學基礎",
       "arxiv_id": "2502.21110",
       "title": "Rare event modeling with self-regularized normalizing flows: what can we learn from a single failure?"
+    },
+    {
+      "date": "2026-10-24",
+      "topic": "DDPM Score Matching and Distribution Learning",
+      "arxiv_id": "2504.05161",
+      "title": "DDPM Score Matching and Distribution Learning"
     }
   ]
 }

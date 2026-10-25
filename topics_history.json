@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-26",
-      "topic": "LLaMA‑Adapter V2 – 大規模語言模型的輕量化微調 (ACL 2024)"
-    },
-    {
       "date": "2026-07-27",
       "topic": "LION Optimizer – 2024 ICLR “Large‑Scale Optimizer for Deep Learning”**"
     },
@@ -373,6 +369,12 @@
       "topic": "DDPM Score Matching and Distribution Learning",
       "arxiv_id": "2504.05161",
       "title": "DDPM Score Matching and Distribution Learning"
+    },
+    {
+      "date": "2026-10-25",
+      "topic": "多鏈 MDP 的加速不動點方法",
+      "arxiv_id": "2506.20910",
+      "title": "Faster Fixed-Point Methods for Multichain MDPs"
     }
   ]
 }

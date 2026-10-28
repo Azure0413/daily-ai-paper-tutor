@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-29",
-      "topic": "AdaM‑2‑Plus – 大批次訓練的自適應二階動量優化器 (基於已發表的 AdaHessian)"
-    },
-    {
       "date": "2026-07-30",
       "topic": "LION Optimizer – 大規模深度學習的高效一階優化器 (ICLR 2024)**"
     },
@@ -379,6 +375,12 @@
       "topic": "重新參數化不變性的近似貝葉斯推論",
       "arxiv_id": "2406.03334",
       "title": "Reparameterization invariance in approximate Bayesian inference"
+    },
+    {
+      "date": "2026-10-28",
+      "topic": "學習式自適應噪聲的擴散模型 (MULAN)",
+      "arxiv_id": "2312.13236",
+      "title": "Diffusion Models With Learned Adaptive Noise"
     }
   ]
 }

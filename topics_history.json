@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-30",
-      "topic": "LION Optimizer – 大規模深度學習的高效一階優化器 (ICLR 2024)**"
-    },
-    {
       "date": "2026-07-31",
       "topic": "Broyden 法於隱式神經層的加速求解（ICLR 2024 《Broyden’s Method for Accelerating Implicit Neural Networks》）"
     },
@@ -381,6 +377,12 @@
       "topic": "學習式自適應噪聲的擴散模型 (MULAN)",
       "arxiv_id": "2312.13236",
       "title": "Diffusion Models With Learned Adaptive Noise"
+    },
+    {
+      "date": "2026-10-29",
+      "topic": "從能量函數到擴散模型的離線訓練",
+      "arxiv_id": "2402.05098",
+      "title": "Improved off-policy training of diffusion samplers"
     }
   ]
 }

@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-07-31",
-      "topic": "Broyden 法於隱式神經層的加速求解（ICLR 2024 《Broyden’s Method for Accelerating Implicit Neural Networks》）"
-    },
-    {
       "date": "2026-08-01",
       "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning"
     },
@@ -383,6 +379,12 @@
       "topic": "從能量函數到擴散模型的離線訓練",
       "arxiv_id": "2402.05098",
       "title": "Improved off-policy training of diffusion samplers"
+    },
+    {
+      "date": "2026-10-30",
+      "topic": "生成式分數式分數微分模型 (Generative Fractional Diffusion Models)",
+      "arxiv_id": "2310.17638",
+      "title": "Generative Fractional Diffusion Models"
     }
   ]
 }

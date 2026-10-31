@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-08-01",
-      "topic": "LION Optimizer – Large‑Scale Optimizer for Deep Learning"
-    },
-    {
       "date": "2026-08-02",
       "topic": "文本接續的數學原理與說明"
     },
@@ -385,6 +381,12 @@
       "topic": "生成式分數式分數微分模型 (Generative Fractional Diffusion Models)",
       "arxiv_id": "2310.17638",
       "title": "Generative Fractional Diffusion Models"
+    },
+    {
+      "date": "2026-10-31",
+      "topic": "LoRA-GA:以梯度近似提升低秩微調效率",
+      "arxiv_id": "2407.05000",
+      "title": "LoRA-GA: Low-Rank Adaptation with Gradient Approximation"
     }
   ]
 }

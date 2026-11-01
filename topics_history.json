@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-08-02",
-      "topic": "文本接續的數學原理與說明"
-    },
-    {
       "date": "2026-08-03",
       "topic": "LLaVA‑Pretrain – 大規模視覺‑語言模型的預訓練目標與梯度推導"
     },
@@ -387,6 +383,12 @@
       "topic": "LoRA-GA:以梯度近似提升低秩微調效率",
       "arxiv_id": "2407.05000",
       "title": "LoRA-GA: Low-Rank Adaptation with Gradient Approximation"
+    },
+    {
+      "date": "2026-11-01",
+      "topic": "受限擴散模型之雙重訓練教學",
+      "arxiv_id": "2408.15094",
+      "title": "Constrained Diffusion Models via Dual Training"
     }
   ]
 }

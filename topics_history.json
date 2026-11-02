@@ -1,10 +1,6 @@
 {
   "topics": [
     {
-      "date": "2026-08-03",
-      "topic": "LLaVA‑Pretrain – 大規模視覺‑語言模型的預訓練目標與梯度推導"
-    },
-    {
       "date": "2026-08-04",
       "topic": "**AdaM2‑Plus – 大批次訓練的自適應二階動量優化器**（ICLR 2025）"
     },
@@ -389,6 +385,12 @@
       "topic": "受限擴散模型之雙重訓練教學",
       "arxiv_id": "2408.15094",
       "title": "Constrained Diffusion Models via Dual Training"
+    },
+    {
+      "date": "2026-11-02",
+      "topic": "Markovian Flow Matching 於 MCMC 加速的原理與實作",
+      "arxiv_id": "2405.14392",
+      "title": "Markovian Flow Matching: Accelerating MCMC with Continuous Normalizing Flows"
     }
   ]
 }

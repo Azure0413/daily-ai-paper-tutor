@@ -6,7 +6,7 @@ from datetime import date
 from pathlib import Path
 
 HISTORY_FILE = Path(os.environ.get("HISTORY_FILE", "topics_history.json"))
-MAX_ENTRIES = 90
+MAX_ENTRIES = 400  # 去重靠 arXiv id,多留一點;太小會讓幾個月前教過的 paper 又被選中
 
 
 def _norm(s: str) -> str:

@@ -391,6 +391,12 @@
       "topic": "Markovian Flow Matching 於 MCMC 加速的原理與實作",
       "arxiv_id": "2405.14392",
       "title": "Markovian Flow Matching: Accelerating MCMC with Continuous Normalizing Flows"
+    },
+    {
+      "date": "2026-11-03",
+      "topic": "線性迴歸的上下文學習需要多少前訓練任務?",
+      "arxiv_id": "2310.08391",
+      "title": "How Many Pretraining Tasks Are Needed for In-Context Learning of Linear Regression?"
     }
   ]
 }

@@ -1,10 +1,14 @@
 import json
 import os
+import random
 import re
 import sys
 import traceback
 
-from arxiv_check import ArxivUnavailable, lookup_paper, venue_in_comment
+from arxiv_check import (
+    TOPIC_KEYWORDS, ArxivUnavailable, fetch_candidates, lookup_paper, math_score,
+    venue_from_comment, venue_in_comment,
+)
 from discord_sender import send_to_discord
 from groq_client import (
     MODEL_REASONING, MODEL_WITH_SEARCH, SEARCH_TOOL_CHOICE, SEARCH_TOOLS,
@@ -96,19 +100,72 @@ def run_critic(name: str, max_chars: int = 1500, **kw) -> str | None:
 
 # ---------------------------------------------------------------- Round 1
 
+def write_draft(meta, ref: dict) -> str | None:
+    """Round 1b:依 (已驗證的) metadata 寫草稿並驗證。不合格回 None。
+    meta=None 代表 arXiv 連不上的降級模式 (只剩模型宣稱的 ref)。"""
+    title = meta.title if meta else ref["title"]
+    print("[Round 1b] 寫草稿…")
+    draft = call_groq_complete(
+        model=MODEL_REASONING,
+        system=GENERATOR_SYSTEM,
+        user=generator_user_prompt(
+            title, ref["venue"], meta.arxiv_id if meta else None,
+            meta.authors if meta else [], meta.abstract if meta else ""),
+        max_tokens=4000,
+        temperature=0.5,
+        max_continuations=2,
+        reasoning_effort="low",
+    )
+    problems = validate_article(draft)
+    if problems:
+        print(f"[R1b] ✗ 草稿不合格 {problems},換下一個候選")
+        return None
+    print(f"[R1b] draft = {len(draft)} chars")
+    return ensure_topic_line(draft, title)
+
+
+def arxiv_candidates(entries: list[dict]) -> list:
+    """Round 1a (主路徑):直接從 arXiv 撈「真實存在、comment 證實已被收錄、沒教過」的 paper。
+    完全不靠 LLM 記憶,所以不會編造、也不會一再繞回同一批熱門論文。連不上 arXiv 回 []。"""
+    try:
+        pool = fetch_candidates()
+    except ArxivUnavailable as e:
+        print(f"[R1a] ⚠️ arXiv 候選池取得失敗 ({e}),改走 LLM picker")
+        return []
+    fresh = [m for m in pool if not find_duplicate(entries, m.arxiv_id, m.title)]
+    print(f"[R1a] arXiv 候選池: {len(pool)} 篇,去重後 {len(fresh)} 篇")
+    # 偏向「有推導 / 理論味」的摘要,同分時隨機
+    fresh.sort(key=lambda m: math_score(m.abstract) + random.random() * 2, reverse=True)
+    return fresh
+
+
 def get_draft(entries: list[dict]) -> tuple[str, dict, object]:
-    """挑 paper → arXiv 驗證 → 去重 → 寫草稿。回傳 (draft, ref, meta)。"""
-    avoid = avoid_list(entries)
+    """挑 paper → (arXiv 驗證) → 去重 → 寫草稿。回傳 (draft, ref, meta)。
+
+    路徑 A:arXiv 候選池 (主要)。路徑 B:LLM browser_search picker (備援,原本的邏輯)。"""
     rejected: list[str] = []
 
+    # ---------------- 路徑 A:arXiv 候選池 ----------------
+    for i, meta in enumerate(arxiv_candidates(entries)[:MAX_PAPER_ATTEMPTS], 1):
+        ref = {"title": meta.title, "arxiv_id": meta.arxiv_id,
+               "venue": venue_from_comment(meta.comment) or ""}
+        print(f"[R1a] 候選 {i} (arXiv 池): arXiv:{meta.arxiv_id} {meta.title!r} ({ref['venue']})")
+        draft = write_draft(meta, ref)
+        if draft:
+            return draft, ref, meta
+        rejected.append(meta.title)
+
+    # ---------------- 路徑 B:LLM picker (備援) ----------------
+    avoid = avoid_list(entries)
     for attempt in range(1, MAX_PAPER_ATTEMPTS + 1):
-        print(f"[Round 1a] 挑 paper (候選 {attempt}/{MAX_PAPER_ATTEMPTS}, browser_search)…")
+        focus = random.choice(TOPIC_KEYWORDS)  # 每次換一個子領域,避免模型每次都給同一篇
+        print(f"[Round 1a] 挑 paper (候選 {attempt}/{MAX_PAPER_ATTEMPTS}, browser_search, 主題: {focus})…")
         raw = call_groq(
             model=MODEL_WITH_SEARCH,
             system=PICK_SYSTEM,
-            user=pick_user_prompt(avoid, rejected),
+            user=pick_user_prompt(avoid, rejected, focus),
             max_tokens=2000,
-            temperature=0.7,
+            temperature=0.9,
             tools=SEARCH_TOOLS,
             tool_choice=SEARCH_TOOL_CHOICE,
             reasoning_effort="low",
@@ -141,27 +198,10 @@ def get_draft(entries: list[dict]) -> tuple[str, dict, object]:
             rejected.append(meta.title if meta else ref["title"])
             continue
 
-        # ---- Round 1b:寫草稿 (不帶工具) ----
-        print("[Round 1b] 寫草稿…")
-        draft = call_groq_complete(
-            model=MODEL_REASONING,
-            system=GENERATOR_SYSTEM,
-            user=generator_user_prompt(
-                meta.title if meta else ref["title"], ref["venue"],
-                meta.arxiv_id if meta else None,
-                meta.authors if meta else [], meta.abstract if meta else ""),
-            max_tokens=4000,
-            temperature=0.5,
-            max_continuations=2,
-            reasoning_effort="low",
-        )
-        problems = validate_article(draft)
-        if problems:
-            print(f"[R1b] ✗ 草稿不合格 {problems},換下一個候選")
-            rejected.append(meta.title if meta else ref["title"])
-            continue
-        print(f"[R1b] draft = {len(draft)} chars")
-        return ensure_topic_line(draft, meta.title if meta else ref["title"]), ref, meta
+        draft = write_draft(meta, ref)
+        if draft:
+            return draft, ref, meta
+        rejected.append(meta.title if meta else ref["title"])
 
     raise PipelineError(f"連續 {MAX_PAPER_ATTEMPTS} 個候選都不合格: {rejected}")
 

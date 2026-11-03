@@ -9,11 +9,13 @@ LLM 的 browser_search 會編出不存在的 paper (標題、作者、會議混�
 - 連不上 arXiv      -> raise ArxivUnavailable (呼叫端可降級,但要在文章標註「未驗證」)
 """
 import os
+import random
 import re
 import time
 import unicodedata
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field
+from datetime import date
 from difflib import SequenceMatcher
 
 import requests
@@ -124,3 +126,82 @@ def venue_in_comment(comment: str, venue: str) -> bool:
     """資訊用:arXiv comment 是否提到模型宣稱的會議 (作者自填,不一定有)。"""
     name = re.split(r"[\s'’]", (venue or "").strip())[0].lower()
     return bool(name) and name in (comment or "").lower()
+
+
+# ---------------------------------------------------------------- 候選池 (不經過 LLM)
+# 為什麼要有這段:LLM 憑記憶 / browser_search 挑 paper,會一直繞回同一批「最有名」的論文
+# (已教過 → 重複) 或編出不存在的編號 (2405.12345)。歷史越長,失敗率越高。
+# 改成直接問 arXiv:「comment 欄位寫著已被某會議收錄」的 paper,產出的候選一定真實存在。
+VENUE_NAMES = ("NeurIPS", "ICLR", "ICML", "AAAI")
+FIRST_YEAR = 2024
+TOPIC_KEYWORDS = (
+    "score matching", "flow matching", "rectified flow", "consistency model", "diffusion sampler",
+    "masked diffusion", "discrete diffusion", "normalizing flow", "variational inference",
+    "Langevin", "optimal transport", "Schrodinger bridge", "stochastic differential equation",
+    "neural ODE", "mixture of experts", "low-rank adaptation", "linear attention",
+    "state space model", "policy gradient", "preference optimization", "gradient clipping",
+    "Adam convergence", "optimizer", "random features", "kernel", "Bayesian inference",
+    "generalization bound", "in-context learning", "contrastive learning", "scaling law",
+    "quantization", "sampling", "Markov chain Monte Carlo", "implicit bias", "loss landscape",
+)
+_VENUE_RE = re.compile(r"\b(NeurIPS|NIPS|ICLR|ICML|CVPR|AAAI)\b[\s'’_\-:]*(?:20)?(2[4-9])\b", re.I)
+_BAD_COMMENT_RE = re.compile(r"under review|submitted|workshop|rejected|withdrawn", re.I)
+_MATH_HINTS = ("theor", "prove", "provabl", "deriv", "bound", "converge", "closed-form",
+               "objective", "estimator", "variational", "unbiased", "likelihood", "optimal",
+               "equivalen", "generaliz", "regret", "kernel", "differential equation",
+               "sampler", "score matching", "minimax", "analysis")
+_ENGINEERING_HINTS = ("benchmark", "dataset", "we release", "survey", "toolkit", "open-source")
+
+
+def venue_from_comment(comment: str, today: date | None = None) -> str | None:
+    """'Accepted at ICLR 2025' -> 'ICLR 2025';under review / workshop / 未來年份 -> None。"""
+    c = comment or ""
+    if _BAD_COMMENT_RE.search(c):
+        return None
+    m = _VENUE_RE.search(c)
+    if not m:
+        return None
+    year = 2000 + int(m.group(2))
+    if year > (today or date.today()).year:
+        return None
+    name = {"NIPS": "NeurIPS", "NEURIPS": "NeurIPS"}.get(m.group(1).upper(), m.group(1).upper())
+    return f"{name} {year}"
+
+
+def math_score(abstract: str) -> int:
+    """很粗的啟發式:摘要含愈多「推導 / 理論」字眼愈高,純 benchmark / 資料集類扣分。"""
+    a = (abstract or "").lower()
+    return sum(w in a for w in _MATH_HINTS) - 2 * sum(w in a for w in _ENGINEERING_HINTS)
+
+
+def fetch_candidates(n_queries: int = 4, per_query: int = 25, rng=None,
+                     today: date | None = None) -> list[ArxivMeta]:
+    """隨機「主題關鍵字 × 會議年份」查 arXiv,回傳 comment 證實已被收錄的 paper (去掉重複 id)。
+    全部查詢都連不上才 raise ArxivUnavailable;部分成功就回傳已拿到的。"""
+    rng = rng or random
+    year_now = (today or date.today()).year
+    out: dict[str, ArxivMeta] = {}
+    last_err = None
+    for _ in range(n_queries):
+        kw = rng.choice(TOPIC_KEYWORDS)
+        venue_q = f"{rng.choice(VENUE_NAMES)} {rng.randint(FIRST_YEAR, year_now)}"
+        params = {
+            "search_query": f'abs:"{kw}" AND co:"{venue_q}"',
+            "start": rng.choice((0, 25, 50)),
+            "max_results": per_query,
+            "sortBy": "submittedDate",
+            "sortOrder": "descending",
+        }
+        try:
+            feed = parse_feed(_get(params))
+        except ArxivUnavailable as e:
+            last_err = e
+            continue
+        for m in feed:
+            if m.arxiv_id and venue_from_comment(m.comment, today) and m.arxiv_id not in out:
+                out[m.arxiv_id] = m
+        if len(out) >= 40:
+            break
+    if not out and last_err is not None:
+        raise last_err
+    return list(out.values())

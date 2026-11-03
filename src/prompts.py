@@ -19,11 +19,15 @@ PICK_SYSTEM = """你是 AI 研究員。任務:用 browser_search 找出「一篇
 """
 
 
-def pick_user_prompt(avoid_topics: list[str], rejected: list[str]) -> str:
+def pick_user_prompt(avoid_topics: list[str], rejected: list[str], focus: str | None = None) -> str:
     avoid = "、".join(avoid_topics) if avoid_topics else "(尚無)"
     msg = f"請挑一篇 (2024~2026) 的 paper。\n\n避開以下已教過的主題:{avoid}"
+    if focus:
+        msg += (f"\n\n這次請聚焦在「{focus}」相關的 paper,"
+                "而且挑比較冷門、不是該領域最有名的那幾篇。")
     if rejected:
         msg += "\n\n以下候選本次已被拒絕 (查無此 paper / 重複 / 不適合),請不要再選:" + "、".join(rejected)
+    msg += "\n\narxiv_id 若沒在搜尋結果頁面親眼看到,一律填 null (系統會用標題去 arXiv 查證),不要自己編號碼。"
     return msg
 
 

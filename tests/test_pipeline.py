@@ -195,10 +195,11 @@ def test_avoid_list_is_compact_and_deduped():
 def test_save_roundtrip_and_cap(tmp_path, monkeypatch):
     f = tmp_path / "h.json"
     monkeypatch.setattr(history, "HISTORY_FILE", f)
-    for i in range(95):
+    n = history.MAX_ENTRIES + 5
+    for i in range(n):
         history.save_topic(f"t{i}", arxiv_id=f"2401.{i:05d}")
     es = history.load_entries()
-    assert len(es) == 90 and es[-1]["arxiv_id"] == "2401.00094"
+    assert len(es) == history.MAX_ENTRIES and es[-1]["arxiv_id"] == f"2401.{n - 1:05d}"
     assert not list(tmp_path.glob("*.tmp"))
 
 
@@ -495,3 +496,126 @@ def test_log_scenario_end_to_end_through_real_client(monkeypatch, tmp_path):
     app.run()
     assert len(fake.calls) == 6 and len(sent) == 1
     assert json.loads(f.read_text(encoding="utf-8"))["topics"][-1]["arxiv_id"] == "2401.12345"
+
+
+# ============================================================ arXiv 候選池 (主路徑)
+
+from datetime import date  # noqa: E402
+
+TODAY = date(2026, 11, 3)
+
+
+def _meta(aid, title, comment="Accepted at ICLR 2025", abstract="We derive a convergence bound."):
+    return arxiv_check.ArxivMeta(aid, title, abstract, ["Ada"], comment)
+
+
+@pytest.mark.parametrize("comment,expected", [
+    ("Accepted at ICLR 2025", "ICLR 2025"),
+    ("NeurIPS 2024 Spotlight", "NeurIPS 2024"),
+    ("ICML'25", "ICML 2025"),
+    ("NIPS 2024", "NeurIPS 2024"),
+    ("12 pages, AAAI-26", "AAAI 2026"),
+    ("ICLR 2025 Workshop", None),
+    ("Submitted to ICLR 2027", None),
+    ("Under review at NeurIPS 2025", None),
+    ("ICLR 2027", None),          # 未來年份
+    ("", None),
+])
+def test_venue_from_comment(comment, expected):
+    assert arxiv_check.venue_from_comment(comment, TODAY) == expected
+
+
+def test_math_score_prefers_theory_over_benchmark():
+    theory = "We prove a convergence bound and derive a closed-form estimator."
+    bench = "We release a new benchmark dataset and open-source toolkit."
+    assert arxiv_check.math_score(theory) > arxiv_check.math_score(bench)
+
+
+def _multi_feed(items):
+    entries = "".join(
+        f"<entry><id>http://arxiv.org/abs/{i}v1</id><title>{t}</title><summary>s</summary>"
+        f"<author><name>A</name></author>"
+        + (f"<arxiv:comment xmlns:arxiv=\"http://arxiv.org/schemas/atom\">{c}</arxiv:comment>" if c else "")
+        + "</entry>" for i, t, c in items)
+    return f'<feed xmlns="http://www.w3.org/2005/Atom">{entries}</feed>'
+
+
+def test_fetch_candidates_filters_and_dedupes(monkeypatch):
+    import xml.etree.ElementTree as ET
+    xml = _multi_feed([
+        ("2501.00001", "Accepted One", "Accepted at ICLR 2025"),
+        ("2501.00001", "Accepted One again", "Accepted at ICLR 2025"),   # 同 id
+        ("2501.00002", "Under Review", "Under review at ICLR 2026"),      # 未收錄
+        ("2501.00003", "No Comment", ""),
+        ("2501.00004", "Workshop Paper", "NeurIPS 2024 Workshop"),
+    ])
+    monkeypatch.setattr(arxiv_check, "_get", lambda params: ET.fromstring(xml))
+    got = arxiv_check.fetch_candidates(n_queries=2, today=TODAY)
+    assert [m.arxiv_id for m in got] == ["2501.00001"]
+
+
+def test_fetch_candidates_raises_only_if_everything_failed(monkeypatch):
+    def boom(params):
+        raise arxiv_check.ArxivUnavailable("HTTP 503")
+    monkeypatch.setattr(arxiv_check, "_get", boom)
+    with pytest.raises(arxiv_check.ArxivUnavailable):
+        arxiv_check.fetch_candidates(n_queries=2, today=TODAY)
+
+
+FRESH = _meta("2501.77777", "A Fresh Theory Paper On Diffusion Samplers")
+
+
+def test_pool_path_never_calls_llm_picker(monkeypatch, tmp_path):
+    def llm(system, user):
+        assert not system.startswith("你是 AI 研究員。任務:用 browser"), "picker 不該被呼叫"
+        return clean_llm(system, user)
+    dup = _meta("2401.12345", "Already Taught Paper")
+    env = Env(monkeypatch, tmp_path, llm,
+              entries=[{"date": "2026-10-01", "topic": "舊", "arxiv_id": "2401.12345"}])
+    monkeypatch.setattr(app, "fetch_candidates", lambda *a, **k: [dup, FRESH])
+    app.run()
+    assert len(env.sent) == 1 and "arxiv.org/abs/2501.77777" in env.sent[0]
+    assert env.saved()[-1]["arxiv_id"] == "2501.77777"
+
+
+def test_user_log_scenario_repeating_picker_no_longer_fatal(monkeypatch, tmp_path):
+    """使用者的 log:picker 只會回「已教過」或「編造」的 paper → 以前整條 pipeline 掛掉。"""
+    taught = [{"date": "2026-10-2%d" % i, "topic": f"t{i}", "arxiv_id": a}
+              for i, a in enumerate(["2312.13236", "2406.03334", "2502.21110"])]
+    picks = iter(['{"title": "Diffusion Models With Learned Adaptive Noise", "arxiv_id": "2312.13236", "venue": "NeurIPS 2024"}',
+                  '{"title": "On the Convergence of Gradient Descent for Deep ReLU Networks", "arxiv_id": "2405.12345", "venue": "ICML 2025"}'] * 4)
+    def llm(system, user):
+        return next(picks) if system.startswith("你是 AI 研究員。任務:用 browser") else clean_llm(system, user)
+    env = Env(monkeypatch, tmp_path, llm, entries=taught)
+    monkeypatch.setattr(app, "fetch_candidates", lambda *a, **k: [FRESH])
+    app.run()
+    assert env.saved()[-1]["arxiv_id"] == "2501.77777" and len(env.sent) == 1
+
+
+def test_pool_all_duplicates_falls_back_to_llm_picker(monkeypatch, tmp_path):
+    env = Env(monkeypatch, tmp_path, clean_llm,
+              entries=[{"date": "2026-10-01", "topic": "舊", "arxiv_id": "2501.77777"}])
+    monkeypatch.setattr(app, "fetch_candidates", lambda *a, **k: [FRESH])
+    app.run()   # 池子全重複 → 備援 picker (PICK → META 2401.12345) 接手
+    assert env.saved()[-1]["arxiv_id"] == "2401.12345"
+
+
+def test_pool_unavailable_falls_back_to_llm_picker(monkeypatch, tmp_path):
+    def boom(*a, **k):
+        raise arxiv_check.ArxivUnavailable("HTTP 503")
+    env = Env(monkeypatch, tmp_path, clean_llm)
+    monkeypatch.setattr(app, "fetch_candidates", boom)
+    app.run()
+    assert env.saved()[-1]["arxiv_id"] == "2401.12345"
+
+
+def test_pool_writer_skip_moves_to_next_pool_candidate(monkeypatch, tmp_path):
+    arts = iter(["SKIP: 純 benchmark", ARTICLE])
+    def llm(system, user):
+        return next(arts) if system.startswith("你是 AI 研究員,擅長") else clean_llm(system, user)
+    env = Env(monkeypatch, tmp_path, llm)
+    second = _meta("2501.88888", "Second Candidate About Score Matching")
+    monkeypatch.setattr(app, "fetch_candidates", lambda *a, **k: [FRESH, second])
+    monkeypatch.setattr(app.random, "random", lambda: 0.0)   # 排序可預期
+    app.run()
+    assert len(env.saved()) == 1 and env.saved()[-1]["arxiv_id"] in {"2501.77777", "2501.88888"}

@@ -397,6 +397,12 @@
       "topic": "線性迴歸的上下文學習需要多少前訓練任務?",
       "arxiv_id": "2310.08391",
       "title": "How Many Pretraining Tasks Are Needed for In-Context Learning of Linear Regression?"
+    },
+    {
+      "date": "2026-11-04",
+      "topic": "雙目標安全對齊於大型語言模型",
+      "arxiv_id": "2503.03710",
+      "title": "Improving LLM Safety Alignment with Dual-Objective Optimization"
     }
   ]
 }

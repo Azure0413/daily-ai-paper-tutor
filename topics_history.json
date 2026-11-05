@@ -403,6 +403,12 @@
       "topic": "雙目標安全對齊於大型語言模型",
       "arxiv_id": "2503.03710",
       "title": "Improving LLM Safety Alignment with Dual-Objective Optimization"
+    },
+    {
+      "date": "2026-11-05",
+      "topic": "超高維度量化與 Trellis 編碼的結合 – QTIP 教學",
+      "arxiv_id": "2406.11235",
+      "title": "QTIP: Quantization with Trellises and Incoherence Processing"
     }
   ]
 }

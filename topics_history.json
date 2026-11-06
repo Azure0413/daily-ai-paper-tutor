@@ -409,6 +409,12 @@
       "topic": "超高維度量化與 Trellis 編碼的結合 – QTIP 教學",
       "arxiv_id": "2406.11235",
       "title": "QTIP: Quantization with Trellises and Incoherence Processing"
+    },
+    {
+      "date": "2026-11-06",
+      "topic": "自回歸直接偏好優化 (Autoregressive Direct Preference Optimization)",
+      "arxiv_id": "2602.09533",
+      "title": "Autoregressive Direct Preference Optimization"
     }
   ]
 }

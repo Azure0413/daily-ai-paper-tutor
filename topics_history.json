@@ -415,6 +415,12 @@
       "topic": "自回歸直接偏好優化 (Autoregressive Direct Preference Optimization)",
       "arxiv_id": "2602.09533",
       "title": "Autoregressive Direct Preference Optimization"
+    },
+    {
+      "date": "2026-11-07",
+      "topic": "無人口先驗的 Rawlsian 公平與 VFair 方法",
+      "arxiv_id": "2411.02467",
+      "title": "Towards Harmless Rawlsian Fairness Regardless of Demographic Prior"
     }
   ]
 }

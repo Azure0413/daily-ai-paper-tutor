@@ -421,6 +421,12 @@
       "topic": "無人口先驗的 Rawlsian 公平與 VFair 方法",
       "arxiv_id": "2411.02467",
       "title": "Towards Harmless Rawlsian Fairness Regardless of Demographic Prior"
+    },
+    {
+      "date": "2026-11-08",
+      "topic": "大型視覺語言模型的幻覺偵測與抑制教學",
+      "arxiv_id": "2308.06394",
+      "title": "Detecting and Preventing Hallucinations in Large Vision Language Models"
     }
   ]
 }

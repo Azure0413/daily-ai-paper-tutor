@@ -427,6 +427,12 @@
       "topic": "大型視覺語言模型的幻覺偵測與抑制教學",
       "arxiv_id": "2308.06394",
       "title": "Detecting and Preventing Hallucinations in Large Vision Language Models"
+    },
+    {
+      "date": "2026-11-09",
+      "topic": "聯邦表徵學習於參數不足情境的理論與演算法",
+      "arxiv_id": "2406.04596",
+      "title": "Federated Representation Learning in the Under-Parameterized Regime"
     }
   ]
 }

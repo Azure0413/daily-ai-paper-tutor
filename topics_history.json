@@ -433,6 +433,12 @@
       "topic": "聯邦表徵學習於參數不足情境的理論與演算法",
       "arxiv_id": "2406.04596",
       "title": "Federated Representation Learning in the Under-Parameterized Regime"
+    },
+    {
+      "date": "2026-11-10",
+      "topic": "無限寬度隨機特徣回歸的過度參數化與必須過擬合",
+      "arxiv_id": "2311.14646",
+      "title": "More is Better in Modern Machine Learning: when Infinite Overparameterization is Optimal and Overfitting is Obligatory"
     }
   ]
 }

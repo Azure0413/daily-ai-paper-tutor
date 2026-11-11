@@ -439,6 +439,12 @@
       "topic": "無限寬度隨機特徣回歸的過度參數化與必須過擬合",
       "arxiv_id": "2311.14646",
       "title": "More is Better in Modern Machine Learning: when Infinite Overparameterization is Optimal and Overfitting is Obligatory"
+    },
+    {
+      "date": "2026-11-11",
+      "topic": "Clipped-SGD 在重尾噪聲下的最後迭代收斂",
+      "arxiv_id": "2610.21026",
+      "title": "On the Last-Iterate Convergence of Clipped Gradient Methods"
     }
   ]
 }

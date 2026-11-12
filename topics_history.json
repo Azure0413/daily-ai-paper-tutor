@@ -445,6 +445,12 @@
       "topic": "Clipped-SGD 在重尾噪聲下的最後迭代收斂",
       "arxiv_id": "2610.21026",
       "title": "On the Last-Iterate Convergence of Clipped Gradient Methods"
+    },
+    {
+      "date": "2026-11-12",
+      "topic": "核函數雙層優化的學習理論",
+      "arxiv_id": "2502.08457",
+      "title": "Learning Theory for Kernel Bilevel Optimization"
     }
   ]
 }

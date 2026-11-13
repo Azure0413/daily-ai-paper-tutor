@@ -451,6 +451,12 @@
       "topic": "核函數雙層優化的學習理論",
       "arxiv_id": "2502.08457",
       "title": "Learning Theory for Kernel Bilevel Optimization"
+    },
+    {
+      "date": "2026-11-13",
+      "topic": "離散流匹配 (Discrete Flow Matching) 教學",
+      "arxiv_id": "2407.15595",
+      "title": "Discrete Flow Matching"
     }
   ]
 }

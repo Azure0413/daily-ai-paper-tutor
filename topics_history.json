@@ -457,6 +457,12 @@
       "topic": "離散流匹配 (Discrete Flow Matching) 教學",
       "arxiv_id": "2407.15595",
       "title": "Discrete Flow Matching"
+    },
+    {
+      "date": "2026-11-14",
+      "topic": "Preference Diffusion 在推薦系統中的應用與數學原理",
+      "arxiv_id": "2410.13117",
+      "title": "Preference Diffusion for Recommendation"
     }
   ]
 }

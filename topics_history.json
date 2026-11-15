@@ -463,6 +463,12 @@
       "topic": "Preference Diffusion 在推薦系統中的應用與數學原理",
       "arxiv_id": "2410.13117",
       "title": "Preference Diffusion for Recommendation"
+    },
+    {
+      "date": "2026-11-15",
+      "topic": "GoalRank:大型排序模型的群體相對優化",
+      "arxiv_id": "2509.22046",
+      "title": "GoalRank: Group-Relative Optimization for a Large Ranking Model"
     }
   ]
 }

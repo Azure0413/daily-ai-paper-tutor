@@ -469,6 +469,12 @@
       "topic": "GoalRank:大型排序模型的群體相對優化",
       "arxiv_id": "2509.22046",
       "title": "GoalRank: Group-Relative Optimization for a Large Ranking Model"
+    },
+    {
+      "date": "2026-11-16",
+      "topic": "平坦性與資訊理論一般化界的結合",
+      "arxiv_id": "2601.01465",
+      "title": "Leveraging Flatness to Improve Information-Theoretic Generalization Bounds for SGD"
     }
   ]
 }

@@ -475,6 +475,12 @@
       "topic": "平坦性與資訊理論一般化界的結合",
       "arxiv_id": "2601.01465",
       "title": "Leveraging Flatness to Improve Information-Theoretic Generalization Bounds for SGD"
+    },
+    {
+      "date": "2026-11-17",
+      "topic": "Ito Diffusion Approximation of Universal Ito Chains for Sampling, Optimization and Boosting",
+      "arxiv_id": "2310.06081",
+      "title": "Ito Diffusion Approximation of Universal Ito Chains for Sampling, Optimization and Boosting"
     }
   ]
 }

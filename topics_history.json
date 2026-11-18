@@ -481,6 +481,12 @@
       "topic": "Ito Diffusion Approximation of Universal Ito Chains for Sampling, Optimization and Boosting",
       "arxiv_id": "2310.06081",
       "title": "Ito Diffusion Approximation of Universal Ito Chains for Sampling, Optimization and Boosting"
+    },
+    {
+      "date": "2026-11-18",
+      "topic": "擴散模型的強化學習統一路徑空間觀點",
+      "arxiv_id": "2608.14430",
+      "title": "Designing Reinforcement Learning for Diffusion Models: A Unified Path-Space View"
     }
   ]
 }

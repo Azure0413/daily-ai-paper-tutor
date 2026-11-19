@@ -487,6 +487,12 @@
       "topic": "擴散模型的強化學習統一路徑空間觀點",
       "arxiv_id": "2608.14430",
       "title": "Designing Reinforcement Learning for Diffusion Models: A Unified Path-Space View"
+    },
+    {
+      "date": "2026-11-19",
+      "topic": "非 i.i.d. 條件下監督式對比表徵學習的泛化分析",
+      "arxiv_id": "2505.04937",
+      "title": "Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings"
     }
   ]
 }

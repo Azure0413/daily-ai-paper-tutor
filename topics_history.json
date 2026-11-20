@@ -493,6 +493,12 @@
       "topic": "非 i.i.d. 條件下監督式對比表徵學習的泛化分析",
       "arxiv_id": "2505.04937",
       "title": "Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings"
+    },
+    {
+      "date": "2026-11-20",
+      "topic": "超越平穩性——有限時域隨機 Softmax 策略梯度的收斂分析",
+      "arxiv_id": "2310.02671",
+      "title": "Beyond Stationarity: Convergence Analysis of Stochastic Softmax Policy Gradient Methods"
     }
   ]
 }

@@ -499,6 +499,12 @@
       "topic": "超越平穩性——有限時域隨機 Softmax 策略梯度的收斂分析",
       "arxiv_id": "2310.02671",
       "title": "Beyond Stationarity: Convergence Analysis of Stochastic Softmax Policy Gradient Methods"
+    },
+    {
+      "date": "2026-11-21",
+      "topic": "BVS:結合貝葉斯搜尋與多模態大型語言模型的細粒度視覺感知",
+      "arxiv_id": "2607.03184",
+      "title": "BVS: Bayesian Visual Search with Multimodal Large Language Model for Fine-grained Perception"
     }
   ]
 }

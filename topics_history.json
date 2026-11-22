@@ -505,6 +505,12 @@
       "topic": "BVS:結合貝葉斯搜尋與多模態大型語言模型的細粒度視覺感知",
       "arxiv_id": "2607.03184",
       "title": "BVS: Bayesian Visual Search with Multimodal Large Language Model for Fine-grained Perception"
+    },
+    {
+      "date": "2026-11-22",
+      "topic": "對比學習中的正向激勵噪聲與資料增強",
+      "arxiv_id": "2408.09929",
+      "title": "Data Augmentation of Contrastive Learning is Estimating Positive-incentive Noise"
     }
   ]
 }

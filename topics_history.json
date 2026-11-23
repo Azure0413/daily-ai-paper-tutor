@@ -511,6 +511,12 @@
       "topic": "對比學習中的正向激勵噪聲與資料增強",
       "arxiv_id": "2408.09929",
       "title": "Data Augmentation of Contrastive Learning is Estimating Positive-incentive Noise"
+    },
+    {
+      "date": "2026-11-23",
+      "topic": "受限抽樣的函數梯度流 (Constrained Functional Gradient Flow, CFG)",
+      "arxiv_id": "2410.23170",
+      "title": "Functional Gradient Flows for Constrained Sampling"
     }
   ]
 }

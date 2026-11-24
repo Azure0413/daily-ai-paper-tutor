@@ -517,6 +517,12 @@
       "topic": "受限抽樣的函數梯度流 (Constrained Functional Gradient Flow, CFG)",
       "arxiv_id": "2410.23170",
       "title": "Functional Gradient Flows for Constrained Sampling"
+    },
+    {
+      "date": "2026-11-24",
+      "topic": "資訊理論觀點下的離散擴散模型",
+      "arxiv_id": "2510.24088",
+      "title": "Information-Theoretic Discrete Diffusion"
     }
   ]
 }

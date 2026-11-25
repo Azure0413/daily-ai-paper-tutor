@@ -523,6 +523,12 @@
       "topic": "資訊理論觀點下的離散擴散模型",
       "arxiv_id": "2510.24088",
       "title": "Information-Theoretic Discrete Diffusion"
+    },
+    {
+      "date": "2026-11-25",
+      "topic": "改善擴散式生成模型的對抗魯棒性教學",
+      "arxiv_id": "2502.17099",
+      "title": "Improved Diffusion-based Generative Model with Better Adversarial Robustness"
     }
   ]
 }

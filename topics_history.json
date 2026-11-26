@@ -529,6 +529,12 @@
       "topic": "改善擴散式生成模型的對抗魯棒性教學",
       "arxiv_id": "2502.17099",
       "title": "Improved Diffusion-based Generative Model with Better Adversarial Robustness"
+    },
+    {
+      "date": "2026-11-26",
+      "topic": "從神經切線核觀點理解「線性探測後微調」的機制",
+      "arxiv_id": "2405.16747",
+      "title": "Understanding Linear Probing then Fine-tuning Language Models from NTK Perspective"
     }
   ]
 }

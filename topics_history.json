@@ -535,6 +535,12 @@
       "topic": "從神經切線核觀點理解「線性探測後微調」的機制",
       "arxiv_id": "2405.16747",
       "title": "Understanding Linear Probing then Fine-tuning Language Models from NTK Perspective"
+    },
+    {
+      "date": "2026-11-27",
+      "topic": "線性注意力模型的上下文學習訓練動力學",
+      "arxiv_id": "2501.16265",
+      "title": "Training Dynamics of In-Context Learning in Linear Attention"
     }
   ]
 }
